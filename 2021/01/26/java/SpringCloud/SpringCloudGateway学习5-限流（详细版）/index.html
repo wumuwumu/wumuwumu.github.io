@@ -1,0 +1,1705 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="SpringCloudGateway基本操作-限流（详细版）, blog">
+    <meta name="description" content="起风了，唯有努力生存">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>SpringCloudGateway基本操作-限流（详细版） | wumu&#39;s blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="wumu's blog" type="application/atom+xml">
+</head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">wumu&#39;s blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">wumu&#39;s blog</div>
+        <div class="logo-desc">
+            
+            起风了，唯有努力生存
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/0.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">SpringCloudGateway基本操作-限流（详细版）</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                          <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                          </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2021-01-26
+                </div>
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <p>话说在 Spring Cloud Gateway 问世之前，Spring Cloud 的微服务世界里，网关一定非 Netflix Zuul 莫属。但是由于 Zuul 1.x 存在的一些问题，比如阻塞式的 API，不支持 WebSocket 等，一直被人所诟病，而且 Zuul 升级新版本依赖于 Netflix 公司，经过几次跳票之后，Spring 开源社区决定推出自己的网关组件，替代 Netflix Zuul。</p>
+<p>从 18 年 6 月 Spring Cloud 发布的 Finchley 版本开始，Spring Cloud Gateway 逐渐崭露头角，它基于 Spring 5.0、Spring Boot 2.0 和 Project Reactor 等技术开发，不仅支持响应式和无阻塞式的 API，而且支持 WebSocket，和 Spring 框架紧密集成。尽管 Zuul 后来也推出了 2.x 版本，在底层使用了异步无阻塞式的 API，大大改善了其性能，但是目前看来 Spring 并没有打算继续集成它的计划。</p>
+<p>根据官网的描述，Spring Cloud Gateway 的主要特性如下：</p>
+<ul>
+<li>Built on Spring Framework 5, Project Reactor and Spring Boot 2.0</li>
+<li>Able to match routes on any request attribute</li>
+<li>Predicates and filters are specific to routes</li>
+<li>Hystrix Circuit Breaker integration</li>
+<li>Spring Cloud DiscoveryClient integration</li>
+<li>Easy to write Predicates and Filters</li>
+<li>Request Rate Limiting</li>
+<li>Path Rewriting</li>
+</ul>
+<p>可以看出 Spring Cloud Gateway 可以很方便的和 Spring Cloud 生态中的其他组件进行集成（比如：断路器和服务发现），而且提供了一套简单易写的 <strong>断言</strong>（<strong>Predicates</strong>，有的地方也翻译成 <strong>谓词</strong>）和 <strong>过滤器</strong>（<strong>Filters</strong>）机制，可以对每个 <strong>路由</strong>（<strong>Routes</strong>）进行特殊请求处理。</p>
+<p>最近在项目中使用了 Spring Cloud Gateway，并在它的基础上实现了一些高级特性，如限流和留痕，在网关的使用过程中遇到了不少的挑战，于是趁着项目结束，抽点时间系统地学习并总结下。这篇文章主要学习限流技术，首先我会介绍一些常见的限流场景和限流算法，然后介绍一些关于限流的开源项目，学习别人是如何实现限流的，最后介绍我是如何在网关中实现限流的，并分享一些实现过程中的经验和遇到的坑。</p>
+<h2 id="一、常见的限流场景"><a href="#一、常见的限流场景" class="headerlink" title="一、常见的限流场景"></a>一、常见的限流场景</h2><p><strong>缓存</strong>、<strong>降级</strong> 和 <strong>限流</strong> 被称为高并发、分布式系统的三驾马车，网关作为整个分布式系统中的第一道关卡，限流功能自然必不可少。通过限流，可以控制服务请求的速率，从而提高系统应对突发大流量的能力，让系统更具弹性。限流有着很多实际的应用场景，比如双十一的秒杀活动， 12306 的抢票等。</p>
+<h3 id="1-1-限流的对象"><a href="#1-1-限流的对象" class="headerlink" title="1.1 限流的对象"></a>1.1 限流的对象</h3><p>通过上面的介绍，我们对限流的概念可能感觉还是比较模糊，到底限流限的是什么？顾名思义，限流就是限制流量，但这里的流量是一个比较笼统的概念。如果考虑各种不同的场景，限流是非常复杂的，而且和具体的业务规则密切相关，可以考虑如下几种常见的场景：</p>
+<ul>
+<li>限制某个接口一分钟内最多请求 100 次</li>
+<li>限制某个用户的下载速度最多 100KB/S</li>
+<li>限制某个用户同时只能对某个接口发起 5 路请求</li>
+<li>限制某个 IP 来源禁止访问任何请求</li>
+</ul>
+<p>从上面的例子可以看出，根据不同的请求者和请求资源，可以组合出不同的限流规则。可以根据请求者的 IP 来进行限流，或者根据请求对应的用户来限流，又或者根据某个特定的请求参数来限流。而限流的对象可以是请求的频率，传输的速率，或者并发量等，其中最常见的两个限流对象是请求频率和并发量，他们对应的限流被称为 <strong>请求频率限流</strong>（Request rate limiting）和 <strong>并发量限流</strong>（Concurrent requests limiting）。<strong>传输速率限流</strong> 在下载场景下比较常用，比如一些资源下载站会限制普通用户的下载速度，只有购买会员才能提速，这种限流的做法实际上和请求频率限流类似，只不过一个限制的是请求量的多少，一个限制的是请求数据报文的大小。这篇文章主要介绍请求频率限流和并发量限流。</p>
+<h3 id="1-2-限流的处理方式"><a href="#1-2-限流的处理方式" class="headerlink" title="1.2 限流的处理方式"></a>1.2 限流的处理方式</h3><p>在系统中设计限流方案时，有一个问题值得设计者去仔细考虑，当请求者被限流规则拦截之后，我们该如何返回结果。一般我们有下面三种限流的处理方式：</p>
+<ul>
+<li>拒绝服务</li>
+<li>排队等待</li>
+<li>服务降级</li>
+</ul>
+<p>最简单的做法是拒绝服务，直接抛出异常，返回错误信息（比如返回 HTTP 状态码 429 Too Many Requests），或者给前端返回 302 重定向到一个错误页面，提示用户资源没有了或稍后再试。但是对于一些比较重要的接口不能直接拒绝，比如秒杀、下单等接口，我们既不希望用户请求太快，也不希望请求失败，这种情况一般会将请求放到一个消息队列中排队等待，消息队列可以起到削峰和限流的作用。第三种处理方式是服务降级，当触发限流条件时，直接返回兜底数据，比如查询商品库存的接口，可以默认返回有货。</p>
+<h3 id="1-3-限流的架构"><a href="#1-3-限流的架构" class="headerlink" title="1.3 限流的架构"></a>1.3 限流的架构</h3><p>针对不同的系统架构，需要使用不同的限流方案。如下图所示，服务部署的方式一般可以分为单机模式和集群模式：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9tbWJpei5xcGljLmNuL21tYml6X3BuZy93YmlheDR4RUFsNXp5dUhQaWFlZTQweks4dXoxRVh0S0loUHVzVllCc2JnVWljU3RLS0VpYzZXRjRYT256cmpBRzZzSW96eWhUUVlKaEg3ZEJtN2JnMWczVncvNjQw?x-oss-process=image/format,png" alt="img"></p>
+<p>单机模式的限流非常简单，可以直接基于内存就可以实现，而集群模式的限流必须依赖于某个“中心化”的组件，比如网关或 Redis，从而引出两种不同的限流架构：<strong>网关层限流</strong> 和 <strong>中间件限流</strong>。</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9tbWJpei5xcGljLmNuL21tYml6X3BuZy93YmlheDR4RUFsNXp5dUhQaWFlZTQweks4dXoxRVh0S0loNE80aWFtRWppY0kzM0U3U1RiaWNWS1p2SkxzNVlJZE1Uek9tZVhxcXhPa3oxSkNoSDUwc0RXdTNRLzY0MA?x-oss-process=image/format,png" alt="img"></p>
+<p>网关作为整个分布式系统的入口，承担了所有的用户请求，所以在网关中进行限流是最合适不过的。网关层限流有时也被称为 <strong>接入层限流</strong>。除了我们使用的 Spring Cloud Gateway，最常用的网关层组件还有 Nginx，可以通过它的 ngx_http_limit_req_module 模块，使用 limit_conn_zone、limit_req_zone、limit_rate 等指令很容易的实现并发量限流、请求频率限流和传输速率限流。这里不对 Nginx 作过多的说明，关于这几个指令的详细信息可以 参考 Nginx 的官方文档。</p>
+<p>另一种限流架构是中间件限流，可以将限流的逻辑下沉到服务层。但是集群中的每个服务必须将自己的流量信息统一汇总到某个地方供其他服务读取，一般来说用 Redis 的比较多，Redis 提供的过期特性和 lua 脚本执行非常适合做限流。除了 Redis 这种中间件，还有很多类似的分布式缓存系统都可以使用，如 Hazelcast、Apache Ignite、Infinispan 等。</p>
+<p>我们可以更进一步扩展上面的架构，将网关改为集群模式，虽然这还是网关层限流架构，但是由于网关变成了集群模式，所以网关必须依赖于中间件进行限流，这和上面讨论的中间件限流没有区别。</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9tbWJpei5xcGljLmNuL21tYml6X3BuZy93YmlheDR4RUFsNXp5dUhQaWFlZTQweks4dXoxRVh0S0loM2VMS2ljTjVPamtQeTg1SnpreGNUREFjOWJ4SG1JZVlpY1VmalVJWkNyTVJtdEYydVlUSVBnaWFBLzY0MA?x-oss-process=image/format,png" alt="img"></p>
+<h2 id="二、常见的限流算法"><a href="#二、常见的限流算法" class="headerlink" title="二、常见的限流算法"></a>二、常见的限流算法</h2><p>通过上面的学习，我们知道限流可以分为请求频率限流和并发量限流，根据系统架构的不同，又可以分为网关层限流和分布式限流。在不同的应用场景下，我们需要采用不同的限流算法。这一节将介绍一些主流的限流算法。</p>
+<p>有一点要注意的是，利用池化技术也可以达到限流的目的，比如线程池或连接池，但这不是本文的重点。</p>
+<h3 id="2-1-固定窗口算法（Fixed-Window）"><a href="#2-1-固定窗口算法（Fixed-Window）" class="headerlink" title="2.1 固定窗口算法（Fixed Window）"></a>2.1 固定窗口算法（Fixed Window）</h3><p>固定窗口算法是一种最简单的限流算法，它根据限流的条件，将请求时间映射到一个时间窗口，再使用计数器累加访问次数。譬如限流条件为每分钟 5 次，那么就按照分钟为单位映射时间窗口，假设一个请求时间为 11:00:45，时间窗口就是 11:00:00 ~ 11:00:59，在这个时间窗口内设定一个计数器，每来一个请求计数器加一，当这个时间窗口的计数器超过 5 时，就触发限流条件。当请求时间落在下一个时间窗口内时（11:01:00 ~ 11:01:59），上一个窗口的计数器失效，当前的计数器清零，重新开始计数。</p>
+<p>计数器算法非常容易实现，在单机场景下可以使用 <code>AtomicLong</code>、<code>LongAdder</code> 或 <code>Semaphore</code> 来实现计数，而在分布式场景下可以通过 Redis 的 <code>INCR</code> 和 <code>EXPIRE</code> 等命令并结合 <code>EVAL</code> 或 lua 脚本来实现，Redis 官网提供了几种简单的实现方式。无论是请求频率限流还是并发量限流都可以使用这个算法。</p>
+<p>不过这个算法的缺陷也比较明显，那就是存在严重的临界问题。由于每过一个时间窗口，计数器就会清零，这使得限流效果不够平滑，恶意用户可以利用这个特点绕过我们的限流规则。如下图所示，我们的限流条件本来是每分钟 5 次，但是恶意用户在 11:00:00 ~ 11:00:59 这个时间窗口的后半分钟发起 5 次请求，接下来又在 11:01:00 ~ 11:01:59 这个时间窗口的前半分钟发起 5 次请求，这样我们的系统就在 1 分钟内承受了 10 次请求。（图片来源）</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9tbWJpei5xcGljLmNuL21tYml6X3BuZy93YmlheDR4RUFsNXp5dUhQaWFlZTQweks4dXoxRVh0S0loamEzMURCRmJlU2s3a0hKc1VHejJyc0Y2ZzRUMWx4eURFS3ljaWFKMm5RUnNUNXpFN0ZTNjZlUS82NDA?x-oss-process=image/format,png" alt="img"></p>
+<h3 id="2-2-滑动窗口算法（Rolling-Window-或-Sliding-Window）"><a href="#2-2-滑动窗口算法（Rolling-Window-或-Sliding-Window）" class="headerlink" title="2.2 滑动窗口算法（Rolling Window 或 Sliding Window）"></a>2.2 滑动窗口算法（Rolling Window 或 Sliding Window）</h3><p>为了解决固定窗口算法的临界问题，可以将时间窗口划分成更小的时间窗口，然后随着时间的滑动删除相应的小窗口，而不是直接滑过一个大窗口，这就是滑动窗口算法。我们为每个小时间窗口都设置一个计数器，大时间窗口的总请求次数就是每个小时间窗口的计数器的和。如下图所示，我们的时间窗口是 5 秒，可以按秒进行划分，将其划分成 5 个小窗口，时间每过一秒，时间窗口就滑过一秒：（图片来源）</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9tbWJpei5xcGljLmNuL21tYml6X3BuZy93YmlheDR4RUFsNXp5dUhQaWFlZTQweks4dXoxRVh0S0loY2M3YVEyZ0R5WERoeXcwdlFQTHF3UmI2TVZXMklCWDdvRUVpYk5IM0hJYUFoMWlhNHBDWnFmVVEvNjQw?x-oss-process=image/format,png" alt="img"></p>
+<p>rolling-window.png</p>
+<p>每次处理请求时，都需要计算所有小时间窗口的计数器的和，考虑到性能问题，划分的小时间窗口不宜过多，譬如限流条件是每小时 N 个，可以按分钟划分为 60 个窗口，而不是按秒划分成 3600 个。当然如果不考虑性能问题，划分粒度越细，限流效果就越平滑。相反，如果划分粒度越粗，限流效果就越不精确，出现临界问题的可能性也就越大，当划分粒度为 1 时，滑动窗口算法就退化成了固定窗口算法。由于这两种算法都使用了计数器，所以也被称为 <strong>计数器算法（Counters）</strong>。</p>
+<p>进一步思考我们发现，如果划分粒度最粗，也就是只有一个时间窗口时，滑动窗口算法退化成了固定窗口算法；那如果我们把划分粒度调到最细，又会如何呢？那么怎样才能让划分的时间窗口最细呢？时间窗口细到一定地步时，意味着每个时间窗口中只能容纳一个请求，这样我们可以省略计数器，只记录每个请求的时间，然后统计一段时间内的请求数有多少个即可。具体的实现可以参考 这里的 Redis sorted set 技巧 和 这里的 Sliding window log 算法。</p>
+<h3 id="2-3-漏桶算法（Leaky-Bucket）"><a href="#2-3-漏桶算法（Leaky-Bucket）" class="headerlink" title="2.3 漏桶算法（Leaky Bucket）"></a>2.3 漏桶算法（Leaky Bucket）</h3><p>除了计数器算法，另一个很自然的限流思路是将所有的请求缓存到一个队列中，然后按某个固定的速度慢慢处理，这其实就是漏桶算法（Leaky Bucket）。漏桶算法假设将请求装到一个桶中，桶的容量为 M，当桶满时，请求被丢弃。在桶的底部有一个洞，桶中的请求像水一样按固定的速度（每秒 r 个）漏出来。我们用下面这个形象的图来表示漏桶算法：（图片来源）</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9tbWJpei5xcGljLmNuL21tYml6X2pwZy93YmlheDR4RUFsNXp5dUhQaWFlZTQweks4dXoxRVh0S0loS1JnaWFpYTVSMkxweENBOFE5WDdRdGRTWWVKQUhiNnVrNnNLN2hNemtsTTVMdjVqMGR3SUxBWmcvNjQw?x-oss-process=image/format,png" alt="img"></p>
+<p>桶的上面是个水龙头，我们的请求从水龙头流到桶中，水龙头流出的水速不定，有时快有时慢，这种忽快忽慢的流量叫做 <strong>Bursty flow</strong>。如果桶中的水满了，多余的水就会溢出去，相当于请求被丢弃。从桶底部漏出的水速是固定不变的，可以看出漏桶算法可以平滑请求的速率。</p>
+<p>漏桶算法可以通过一个队列来实现，如下图所示：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9tbWJpei5xcGljLmNuL21tYml6X2pwZy93YmlheDR4RUFsNXp5dUhQaWFlZTQweks4dXoxRVh0S0loeWRQTms4NjRnSXVZeGdBajRIdmc5NmF1aWJlRXdHUFlUd1VNczF0aWFRRGlieG42WEd4RExIU1RRLzY0MA?x-oss-process=image/format,png" alt="img"></p>
+<p>当请求到达时，不直接处理请求，而是将其放入一个队列，然后另一个线程以固定的速率从队列中读取请求并处理，从而达到限流的目的。注意的是这个队列可以有不同的实现方式，比如设置请求的存活时间，或将队列改造成 PriorityQueue，根据请求的优先级排序而不是先进先出。当然队列也有满的时候，如果队列已经满了，那么请求只能被丢弃了。漏桶算法有一个缺陷，在处理突发流量时效率很低，于是人们又想出了下面的令牌桶算法。</p>
+<h3 id="2-4-令牌桶算法（Token-Bucket）"><a href="#2-4-令牌桶算法（Token-Bucket）" class="headerlink" title="2.4 令牌桶算法（Token Bucket）"></a>2.4 令牌桶算法（Token Bucket）</h3><p>令牌桶算法（Token Bucket）是目前应用最广泛的一种限流算法，它的基本思想由两部分组成：<strong>生成令牌</strong> 和 <strong>消费令牌</strong>。</p>
+<ul>
+<li>生成令牌：假设有一个装令牌的桶，最多能装 M 个，然后按某个固定的速度（每秒 r 个）往桶中放入令牌，桶满时不再放入；</li>
+<li>消费令牌：我们的每次请求都需要从桶中拿一个令牌才能放行，当桶中没有令牌时即触发限流，这时可以将请求放入一个缓冲队列中排队等待，或者直接拒绝；</li>
+</ul>
+<p>令牌桶算法的图示如下：（图片来源）</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9tbWJpei5xcGljLmNuL21tYml6X2pwZy93YmlheDR4RUFsNXp5dUhQaWFlZTQweks4dXoxRVh0S0loRjlkN29XemljV3RydWV1VTh4M01OV1NEbWdwbGljUXdJbW4zNTZyWk9zTDZxV2lhZFh2S29pYW9XZy82NDA?x-oss-process=image/format,png" alt="img"></p>
+<p>在上面的图中，我们将请求放在一个缓冲队列中，可以看出这一部分的逻辑和漏桶算法几乎一模一样，只不过在处理请求上，一个是以固定速率处理，一个是从桶中获取令牌后才处理。</p>
+<p>仔细思考就会发现，令牌桶算法有一个很关键的问题，就是桶大小的设置，正是这个参数可以让令牌桶算法具备处理突发流量的能力。譬如将桶大小设置为 100，生成令牌的速度设置为每秒 10 个，那么在系统空闲一段时间的之后（桶中令牌一直没有消费，慢慢的会被装满），突然来了 50 个请求，这时系统可以直接按每秒 50 个的速度处理，随着桶中的令牌很快用完，处理速度又会慢慢降下来，和生成令牌速度趋于一致。这是令牌桶算法和漏桶算法最大的区别，漏桶算法无论来了多少请求，只会一直以每秒 10 个的速度进行处理。当然，处理突发流量虽然提高了系统性能，但也给系统带来了一定的压力，如果桶大小设置不合理，突发的大流量可能会直接压垮系统。</p>
+<p>通过上面对令牌桶的原理分析，一般会有两种不同的实现方式。第一种方式是启动一个内部线程，不断的往桶中添加令牌，处理请求时从桶中获取令牌，和上面图中的处理逻辑一样。第二种方式不依赖于内部线程，而是在每次处理请求之前先实时计算出要填充的令牌数并填充，然后再从桶中获取令牌。下面是第二种方式的一种经典实现，其中 <code>capacity</code> 表示令牌桶大小，<code>refillTokensPerOneMillis</code> 表示填充速度，每毫秒填充多少个，<code>availableTokens</code> 表示令牌桶中还剩多少个令牌，<code>lastRefillTimestamp</code> 表示上一次填充时间。</p>
+<pre class="language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">TokenBucket</span> <span class="token punctuation">&#123;</span>
+ 
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">long</span> capacity<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">final</span> <span class="token keyword">double</span> refillTokensPerOneMillis<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">double</span> availableTokens<span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">long</span> lastRefillTimestamp<span class="token punctuation">;</span>
+ 
+    <span class="token keyword">public</span> <span class="token class-name">TokenBucket</span><span class="token punctuation">(</span><span class="token keyword">long</span> capacity<span class="token punctuation">,</span> <span class="token keyword">long</span> refillTokens<span class="token punctuation">,</span> <span class="token keyword">long</span> refillPeriodMillis<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>capacity <span class="token operator">=</span> capacity<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>refillTokensPerOneMillis <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">double</span><span class="token punctuation">)</span> refillTokens <span class="token operator">/</span> <span class="token punctuation">(</span><span class="token keyword">double</span><span class="token punctuation">)</span> refillPeriodMillis<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>availableTokens <span class="token operator">=</span> capacity<span class="token punctuation">;</span>
+        <span class="token keyword">this</span><span class="token punctuation">.</span>lastRefillTimestamp <span class="token operator">=</span> <span class="token class-name">System</span><span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+ 
+    <span class="token keyword">synchronized</span> <span class="token keyword">public</span> <span class="token keyword">boolean</span> <span class="token function">tryConsume</span><span class="token punctuation">(</span><span class="token keyword">int</span> numberTokens<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token function">refill</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>availableTokens <span class="token operator">&lt;</span> numberTokens<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">return</span> <span class="token boolean">false</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span>
+            availableTokens <span class="token operator">-=</span> numberTokens<span class="token punctuation">;</span>
+            <span class="token keyword">return</span> <span class="token boolean">true</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+ 
+    <span class="token keyword">private</span> <span class="token keyword">void</span> <span class="token function">refill</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">long</span> currentTimeMillis <span class="token operator">=</span> <span class="token class-name">System</span><span class="token punctuation">.</span><span class="token function">currentTimeMillis</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token keyword">if</span> <span class="token punctuation">(</span>currentTimeMillis <span class="token operator">></span> lastRefillTimestamp<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            <span class="token keyword">long</span> millisSinceLastRefill <span class="token operator">=</span> currentTimeMillis <span class="token operator">-</span> lastRefillTimestamp<span class="token punctuation">;</span>
+            <span class="token keyword">double</span> refill <span class="token operator">=</span> millisSinceLastRefill <span class="token operator">*</span> refillTokensPerOneMillis<span class="token punctuation">;</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>availableTokens <span class="token operator">=</span> <span class="token class-name">Math</span><span class="token punctuation">.</span><span class="token function">min</span><span class="token punctuation">(</span>capacity<span class="token punctuation">,</span> availableTokens <span class="token operator">+</span> refill<span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token keyword">this</span><span class="token punctuation">.</span>lastRefillTimestamp <span class="token operator">=</span> currentTimeMillis<span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+
+<p>可以像下面这样创建一个令牌桶（桶大小为 100，且每秒生成 100 个令牌）：</p>
+<pre class="language-go" data-language="go"><code class="language-go">TokenBucket limiter <span class="token operator">=</span> <span class="token builtin">new</span> <span class="token function">TokenBucket</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">100</span><span class="token punctuation">,</span> <span class="token number">1000</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+<p>从上面的代码片段可以看出，令牌桶算法的实现非常简单也非常高效，仅仅通过几个变量的运算就实现了完整的限流功能。核心逻辑在于 <code>refill()</code> 这个方法，在每次消费令牌时，计算当前时间和上一次填充的时间差，并根据填充速度计算出应该填充多少令牌。在重新填充令牌后，再判断请求的令牌数是否足够，如果不够，返回 false，如果足够，则减去令牌数，并返回 true。</p>
+<p>在实际的应用中，往往不会直接使用这种原始的令牌桶算法，一般会在它的基础上作一些改进，比如，填充速率支持动态调整，令牌总数支持透支，基于 Redis 支持分布式限流等，不过总体来说还是符合令牌桶算法的整体框架，我们在后面学习一些开源项目时对此会有更深的体会。</p>
+<h2 id="三、一些开源项目"><a href="#三、一些开源项目" class="headerlink" title="三、一些开源项目"></a>三、一些开源项目</h2><p>有很多开源项目中都实现了限流的功能，这一节通过一些开源项目的学习，了解限流是如何实现的。</p>
+<h3 id="3-1-Guava-的-RateLimiter"><a href="#3-1-Guava-的-RateLimiter" class="headerlink" title="3.1 Guava 的 RateLimiter"></a>3.1 Guava 的 RateLimiter</h3><p>Google Guava 是一个强大的核心库，包含了很多有用的工具类，例如：集合、缓存、并发库、字符串处理、I/O 等等。其中在并发库中，Guava 提供了两个和限流相关的类：RateLimiter 和 SmoothRateLimiter。Guava 的 RateLimiter 基于令牌桶算法实现，不过在传统的令牌桶算法基础上做了点改进，支持两种不同的限流方式：<strong>平滑突发限流（SmoothBursty）</strong> 和 <strong>平滑预热限流（SmoothWarmingUp）</strong>。</p>
+<p>下面的方法可以创建一个平滑突发限流器（SmoothBursty）：</p>
+<pre class="language-go" data-language="go"><code class="language-go">RateLimiter limiter <span class="token operator">=</span> RateLimiter<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+<p><code>RateLimiter.create(5)</code> 表示这个限流器容量为 5，并且每秒生成 5 个令牌，也就是每隔 200 毫秒生成一个。我们可以使用 <code>limiter.acquire()</code> 消费令牌，如果桶中令牌足够，返回 0，如果令牌不足，则阻塞等待，并返回等待的时间。我们连续请求几次：</p>
+<pre class="language-go" data-language="go"><code class="language-go">System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>limiter<span class="token punctuation">.</span><span class="token function">acquire</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token string">``</span>System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>limiter<span class="token punctuation">.</span><span class="token function">acquire</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token string">``</span>System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>limiter<span class="token punctuation">.</span><span class="token function">acquire</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token string">``</span>System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>limiter<span class="token punctuation">.</span><span class="token function">acquire</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+<p>输出结果如下：</p>
+<pre class="language-go" data-language="go"><code class="language-go"><span class="token number">0.0</span><span class="token string">``</span><span class="token number">0.198239</span><span class="token string">``</span><span class="token number">0.196083</span><span class="token string">``</span><span class="token number">0.200609</span></code></pre>
+
+<p>可以看出限流器创建之后，初始会有一个令牌，然后每隔 200 毫秒生成一个令牌，所以第一次请求直接返回 0，后面的请求都会阻塞大约 200 毫秒。另外，<code>SmoothBursty</code> 还具有应对突发的能力，而且 <strong>还允许消费未来的令牌</strong>，比如下面的例子：</p>
+<pre class="language-go" data-language="go"><code class="language-go">RateLimiter limiter <span class="token operator">=</span> RateLimiter<span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>limiter<span class="token punctuation">.</span><span class="token function">acquire</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>limiter<span class="token punctuation">.</span><span class="token function">acquire</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>limiter<span class="token punctuation">.</span><span class="token function">acquire</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+<p>会得到类似下面的输出：</p>
+<pre class="language-go" data-language="go"><code class="language-go"><span class="token number">0.01</span><span class="token number">.997428</span>  <span class="token number">0.192273</span>  <span class="token number">0.200616</span></code></pre>
+
+<p>限流器创建之后，初始令牌只有一个，但是我们请求 10 个令牌竟然也通过了，只不过看后面请求发现，第二次请求花了 2 秒左右的时间把前面的透支的令牌给补上了。</p>
+<p>Guava 支持的另一种限流方式是平滑预热限流器（SmoothWarmingUp），可以通过下面的方法创建：</p>
+<pre class="language-java" data-language="java"><code class="language-java"><span class="token class-name">RateLimiter</span> limiter <span class="token operator">=</span> <span class="token class-name">RateLimiter</span><span class="token punctuation">.</span><span class="token function">create</span><span class="token punctuation">(</span><span class="token number">2</span><span class="token punctuation">,</span> <span class="token number">3</span><span class="token punctuation">,</span> <span class="token class-name">TimeUnit</span><span class="token punctuation">.</span>SECONDS<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>limiter<span class="token punctuation">.</span><span class="token function">acquire</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>limiter<span class="token punctuation">.</span><span class="token function">acquire</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>limiter<span class="token punctuation">.</span><span class="token function">acquire</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>limiter<span class="token punctuation">.</span><span class="token function">acquire</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span>limiter<span class="token punctuation">.</span><span class="token function">acquire</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+<p>第一个参数还是每秒创建的令牌数量，这里是每秒 2 个，也就是每 500 毫秒生成一个，后面的参数表示从冷启动速率过渡到平均速率的时间间隔，也就是所谓的热身时间间隔（warm up period）。我们看下输出结果：</p>
+<pre class="language-go" data-language="go"><code class="language-go"><span class="token number">0.0</span> <span class="token number">1.329289</span>  <span class="token number">0.994375</span>  <span class="token number">0.662888</span>  <span class="token number">0.501287</span></code></pre>
+
+<p>第一个请求还是立即得到令牌，但是后面的请求和上面平滑突发限流就完全不一样了，按理来说 500 毫秒就会生成一个令牌，但是我们发现第二个请求却等了 1.3s，而不是 0.5s，后面第三个和第四个请求也等了一段时间。不过可以看出，等待时间在慢慢的接近 0.5s，直到第五个请求等待时间才开始变得正常。从第一个请求到第五个请求，这中间的时间间隔就是热身阶段，可以算出热身的时间就是我们设置的 3 秒。</p>
+<p>关于热身的算法很有意思，也比较烧脑，有兴趣的同学可以参考 这里 和 这里 的过程分析。</p>
+<h3 id="3-2-Bucket4j"><a href="#3-2-Bucket4j" class="headerlink" title="3.2 Bucket4j"></a>3.2 Bucket4j</h3><p>Bucket4j 是一个基于令牌桶算法实现的强大的限流库，它不仅支持单机限流，还支持通过诸如 Hazelcast、Ignite、Coherence、Infinispan 或其他兼容 JCache API (JSR 107) 规范的分布式缓存实现分布式限流。</p>
+<p>在使用 Bucket4j 之前，我们有必要先了解 Bucket4j 中的几个核心概念：</p>
+<ul>
+<li>Bucket</li>
+<li>Bandwidth</li>
+<li>Refill</li>
+</ul>
+<p><code>Bucket</code> 接口代表了令牌桶的具体实现，也是我们操作的入口。它提供了诸如 <code>tryConsume</code> 和 <code>tryConsumeAndReturnRemaining</code> 这样的方法供我们消费令牌。可以通过下面的构造方法来创建 <code>Bucket</code>：</p>
+<pre class="language-go" data-language="go"><code class="language-go">Bucket bucket <span class="token operator">=</span> Bucket4j<span class="token punctuation">.</span><span class="token function">builder</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">addLimit</span><span class="token punctuation">(</span>limit<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token keyword">if</span><span class="token punctuation">(</span>bucket<span class="token punctuation">.</span><span class="token function">tryConsume</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"ok"</span><span class="token punctuation">)</span><span class="token punctuation">;</span><span class="token punctuation">&#125;</span> <span class="token keyword">else</span> <span class="token punctuation">&#123;</span> 
+System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"error"</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+
+<p><code>Bandwidth</code> 的意思是带宽，可以理解为限流的规则。Bucket4j 提供了两种方法来创建 Bandwidth：<code>simple</code> 和 <code>classic</code>。下面是 simple 方式创建的 Bandwidth，表示桶大小为 10，填充速度为每分钟 10 个令牌：</p>
+<pre class="language-java" data-language="java"><code class="language-java"><span class="token class-name">Bandwidth</span> limit <span class="token operator">=</span> <span class="token class-name">Bandwidth</span><span class="token punctuation">.</span><span class="token function">simple</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> <span class="token class-name">Duration</span><span class="token punctuation">.</span><span class="token function">ofMinutes</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+<p>simple 方式桶大小和填充速度是一样的，classic 方式更灵活一点，可以自定义填充速度，下面的例子表示桶大小为 10，填充速度为每分钟 5 个令牌：</p>
+<pre class="language-java" data-language="java"><code class="language-java"><span class="token class-name">Refill</span> filler <span class="token operator">=</span> <span class="token class-name">Refill</span><span class="token punctuation">.</span><span class="token function">greedy</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span> <span class="token class-name">Duration</span><span class="token punctuation">.</span><span class="token function">ofMinutes</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">Bandwidth</span> limit <span class="token operator">=</span> <span class="token class-name">Bandwidth</span><span class="token punctuation">.</span><span class="token function">classic</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">,</span> filler<span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+<p>其中，<code>Refill</code> 用于填充令牌桶，可以通过它定义填充速度，Bucket4j 有两种填充令牌的策略：<strong>间隔策略（intervally）</strong> 和 <strong>贪婪策略（greedy）</strong>。在上面的例子中我们使用的是贪婪策略，如果使用间隔策略可以像下面这样创建 <code>Refill</code>：</p>
+<pre class="language-go" data-language="go"><code class="language-go">Refill filler <span class="token operator">=</span> Refill<span class="token punctuation">.</span><span class="token function">intervally</span><span class="token punctuation">(</span><span class="token number">5</span><span class="token punctuation">,</span> Duration<span class="token punctuation">.</span><span class="token function">ofMinutes</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+<p>所谓间隔策略指的是每隔一段时间，一次性的填充所有令牌，比如上面的例子，会每隔一分钟，填充 5 个令牌，如下所示：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9tbWJpei5xcGljLmNuL21tYml6X3BuZy93YmlheDR4RUFsNXp5dUhQaWFlZTQweks4dXoxRVh0S0loMDVLV2xpYUs2UVhvOHdwTVlxTThZeFRYUFppYm9pYWFNb3NtRjNPNUhKNmxjVllWMlgyZDF1MVR3LzY0MA?x-oss-process=image/format,png" alt="img"></p>
+<p>intervally.png</p>
+<p>而贪婪策略会尽可能贪婪的填充令牌，同样是上面的例子，会将一分钟划分成 5 个更小的时间单元，每隔 12 秒，填充 1 个令牌，如下所示：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9tbWJpei5xcGljLmNuL21tYml6X3BuZy93YmlheDR4RUFsNXp5dUhQaWFlZTQweks4dXoxRVh0S0loaFpvM3VqbHBjWnI4YUtwNGlhVE15aWNRUWljWTRLZThtOWpCMXVaYVdTcVlvNzhUNDJDMzZRZUJnLzY0MA?x-oss-process=image/format,png" alt="img"></p>
+<p>在了解了 Bucket4j 中的几个核心概念之后，我们再来看看官网介绍的一些特性：</p>
+<ul>
+<li>基于令牌桶算法</li>
+<li>高性能，无锁实现</li>
+<li>不存在精度问题，所有计算都是基于整型的</li>
+<li>支持通过符合 JCache API 规范的分布式缓存系统实现分布式限流</li>
+<li>支持为每个 Bucket 设置多个 Bandwidth</li>
+<li>支持同步和异步 API</li>
+<li>支持可插拔的监听 API，用于集成监控和日志</li>
+<li>不仅可以用于限流，还可以用于简单的调度</li>
+</ul>
+<p>Bucket4j 提供了丰富的文档，推荐在使用 Bucket4j 之前，先把官方文档中的 基本用法 和 高级特性 仔细阅读一遍。另外，关于 Bucket4j 的使用，推荐这篇文章 Rate limiting Spring MVC endpoints with bucket4j，这篇文章详细的讲解了如何在 Spring MVC 中使用拦截器和 Bucket4j 打造业务无侵入的限流方案，另外还讲解了如何使用 Hazelcast 实现分布式限流；另外，Rate Limiting a Spring API Using Bucket4j 这篇文章也是一份很好的入门教程，介绍了 Bucket4j 的基础知识，在文章的最后还提供了 Spring Boot Starter 的集成方式，结合 Spring Boot Actuator 很容易将限流指标集成到监控系统中。</p>
+<p>和 Guava 的限流器相比，Bucket4j 的功能显然要更胜一筹，毕竟 Guava 的目的只是用作通用工具类，而不是用于限流的。使用 Bucket4j 基本上可以满足我们的大多数要求，不仅支持单机限流和分布式限流，而且可以很好的集成监控，搭配 Prometheus 和 Grafana 简直完美。值得一提的是，有很多开源项目譬如 JHipster API Gateway 就是使用 Bucket4j 来实现限流的。</p>
+<p>Bucket4j 唯一不足的地方是它只支持请求频率限流，不支持并发量限流，另外还有一点，虽然 Bucket4j 支持分布式限流，但它是基于 Hazelcast 这样的分布式缓存系统实现的，不能使用 Redis，这在很多使用 Redis 作缓存的项目中就很不爽，所以我们还需要在开源的世界里继续探索。</p>
+<h3 id="3-3-Resilience4j"><a href="#3-3-Resilience4j" class="headerlink" title="3.3 Resilience4j"></a>3.3 Resilience4j</h3><p>Resilience4j 是一款轻量级、易使用的高可用框架。用过 Spring Cloud 早期版本的同学肯定都听过 Netflix Hystrix，Resilience4j 的设计灵感就来自于它。自从 Hystrix 停止维护之后，官方也推荐大家使用 Resilience4j 来代替 Hystrix。</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9tbWJpei5xcGljLmNuL21tYml6X3BuZy93YmlheDR4RUFsNXp5dUhQaWFlZTQweks4dXoxRVh0S0loOFdsQjZVSjVQZFFsYnBFUE02c0RWOXByZktieUlMQlNCaWNWdjV6QXdxck40b0JpY1d5Y3huMHcvNjQw?x-oss-process=image/format,png" alt="img"></p>
+<p>hystrix.png</p>
+<p>Resilience4j 的底层采用 Vavr，这是一个非常轻量级的 Java 函数式库，使得 Resilience4j 非常适合函数式编程。Resilience4j 以装饰器模式提供对函数式接口或 lambda 表达式的封装，提供了一波高可用机制：<strong>重试（Retry）</strong>、<strong>熔断（Circuit Breaker）</strong>、<strong>限流（Rate Limiter）</strong>、<strong>限时（Timer Limiter）</strong>、<strong>隔离（Bulkhead）</strong>、<strong>缓存（Caceh）</strong> 和 <strong>降级（Fallback）</strong>。我们重点关注这里的两个功能：限流（Rate Limiter） 和 隔离（Bulkhead），Rate Limiter 是请求频率限流，Bulkhead 是并发量限流。</p>
+<p>Resilience4j 提供了两种限流的实现：<strong>SemaphoreBasedRateLimiter</strong> 和 <strong>AtomicRateLimiter</strong>。<strong>SemaphoreBasedRateLimiter</strong> 基于信号量实现，用户的每次请求都会申请一个信号量，并记录申请的时间，申请通过则允许请求，申请失败则限流，另外有一个内部线程会定期扫描过期的信号量并释放，很显然这是令牌桶的算法。<strong>AtomicRateLimiter</strong> 和上面的经典实现类似，不需要额外的线程，在处理每次请求时，根据距离上次请求的时间和生成令牌的速度自动填充。关于这二者的区别可以参考这篇文章 Rate Limiter Internals in Resilience4j。</p>
+<p>Resilience4j 也提供了两种隔离的实现：<strong>SemaphoreBulkhead</strong> 和 <strong>ThreadPoolBulkhead</strong>，通过信号量或线程池控制请求的并发数，具体的用法参考官方文档，这里不再赘述。</p>
+<p>下面是一个同时使用限流和隔离的例子：</p>
+<pre class="language-java" data-language="java"><code class="language-java">
+<span class="token comment">// 创建一个 Bulkhead，最大并发量为 150</span>
+<span class="token class-name">BulkheadConfig</span> bulkheadConfig <span class="token operator">=</span> <span class="token class-name">BulkheadConfig</span><span class="token punctuation">.</span><span class="token function">custom</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">maxConcurrentCalls</span><span class="token punctuation">(</span><span class="token number">150</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">maxWaitTime</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">Bulkhead</span> bulkhead <span class="token operator">=</span> <span class="token class-name">Bulkhead</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token string">"backendName"</span><span class="token punctuation">,</span> bulkheadConfig<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+<span class="token comment">// 创建一个 RateLimiter，每秒允许一次请求</span>
+<span class="token class-name">RateLimiterConfig</span> rateLimiterConfig <span class="token operator">=</span> <span class="token class-name">RateLimiterConfig</span><span class="token punctuation">.</span><span class="token function">custom</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">timeoutDuration</span><span class="token punctuation">(</span><span class="token class-name">Duration</span><span class="token punctuation">.</span><span class="token function">ofMillis</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">limitRefreshPeriod</span><span class="token punctuation">(</span><span class="token class-name">Duration</span><span class="token punctuation">.</span><span class="token function">ofSeconds</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">limitForPeriod</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">RateLimiter</span> rateLimiter <span class="token operator">=</span> <span class="token class-name">RateLimiter</span><span class="token punctuation">.</span><span class="token function">of</span><span class="token punctuation">(</span><span class="token string">"backendName"</span><span class="token punctuation">,</span> rateLimiterConfig<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+<span class="token comment">// 使用 Bulkhead 和 RateLimiter 装饰业务逻辑</span>
+<span class="token class-name">Supplier</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> supplier <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">-></span> backendService<span class="token punctuation">.</span><span class="token function">doSomething</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token class-name">Supplier</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> decoratedSupplier <span class="token operator">=</span> <span class="token class-name">Decorators</span><span class="token punctuation">.</span><span class="token function">ofSupplier</span><span class="token punctuation">(</span>supplier<span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">withBulkhead</span><span class="token punctuation">(</span>bulkhead<span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">withRateLimiter</span><span class="token punctuation">(</span>rateLimiter<span class="token punctuation">)</span>
+  <span class="token punctuation">.</span><span class="token function">decorate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+<span class="token comment">// 调用业务逻辑</span>
+<span class="token class-name">Try</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">></span></span> <span class="token keyword">try</span> <span class="token operator">=</span> <span class="token class-name">Try</span><span class="token punctuation">.</span><span class="token function">ofSupplier</span><span class="token punctuation">(</span>decoratedSupplier<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token function">assertThat</span><span class="token punctuation">(</span><span class="token keyword">try</span><span class="token punctuation">.</span><span class="token function">isSuccess</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">isTrue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+<p>Resilience4j 在功能特性上比 Bucket4j 强大不少，而且还支持并发量限流。不过最大的遗憾是，Resilience4j 不支持分布式限流。</p>
+<h3 id="3-4-其他"><a href="#3-4-其他" class="headerlink" title="3.4 其他"></a>3.4 其他</h3><p>网上还有很多限流相关的开源项目，不可能一一介绍，这里列出来的只是冰山之一角：</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/mokies/ratelimitj">https://github.com/mokies/ratelimitj</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/wangzheng0822/ratelimiter4j">https://github.com/wangzheng0822/ratelimiter4j</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/wukq/rate-limiter">https://github.com/wukq/rate-limiter</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/marcosbarbero/spring-cloud-zuul-ratelimit">https://github.com/marcosbarbero/spring-cloud-zuul-ratelimit</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/onblog/SnowJena">https://github.com/onblog/SnowJena</a></li>
+<li><a target="_blank" rel="noopener" href="https://gitee.com/zhanghaiyang/spring-boot-starter-current-limiting">https://gitee.com/zhanghaiyang/spring-boot-starter-current-limiting</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/Netflix/concurrency-limits">https://github.com/Netflix/concurrency-limits</a></li>
+</ul>
+<p>可以看出，限流技术在实际项目中应用非常广泛，大家对实现自己的限流算法乐此不疲，新算法和新实现层出不穷。但是找来找去，目前还没有找到一款开源项目完全满足我的需求。</p>
+<p>我的需求其实很简单，需要同时满足两种不同的限流场景：请求频率限流和并发量限流，并且能同时满足两种不同的限流架构：单机限流和分布式限流。下面我们就开始在 Spring Cloud Gateway 中实现这几种限流，通过前面介绍的那些项目，我们取长补短，基本上都能用比较成熟的技术实现，只不过对于最后一种情况，分布式并发量限流，网上没有搜到现成的解决方案，在和同事讨论了几个晚上之后，想出一种新型的基于双窗口滑动的限流算法，我在这里抛砖引玉，欢迎大家批评指正，如果大家有更好的方法，也欢迎讨论。</p>
+<h2 id="四、在网关中实现限流"><a href="#四、在网关中实现限流" class="headerlink" title="四、在网关中实现限流"></a>四、在网关中实现限流</h2><p>在文章一开始介绍 Spring Cloud Gateway 的特性时，我们注意到其中有一条 <code>Request Rate Limiting</code>，说明网关自带了限流的功能，但是 Spring Cloud Gateway 自带的限流有很多限制，譬如不支持单机限流，不支持并发量限流，而且它的请求频率限流也是不尽人意，这些都需要我们自己动手来解决。</p>
+<h3 id="4-1-实现单机请求频率限流"><a href="#4-1-实现单机请求频率限流" class="headerlink" title="4.1 实现单机请求频率限流"></a>4.1 实现单机请求频率限流</h3><p>Spring Cloud Gateway 中定义了关于限流的一个接口 <code>RateLimiter</code>，如下：</p>
+<pre class="language-go" data-language="go"><code class="language-go">public <span class="token keyword">interface</span> RateLimiter<span class="token operator">&lt;</span>C<span class="token operator">></span> extends StatefulConfigurable<span class="token operator">&lt;</span>C<span class="token operator">></span> <span class="token punctuation">&#123;</span>
+    Mono<span class="token operator">&lt;</span>RateLimiter<span class="token punctuation">.</span>Response<span class="token operator">></span> <span class="token function">isAllowed</span><span class="token punctuation">(</span>String routeId<span class="token punctuation">,</span> String id<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+
+<p>这个接口就一个方法 <code>isAllowed</code>，第一个参数 <code>routeId</code> 表示请求路由的 ID，根据 routeId 可以获取限流相关的配置，第二个参数 <code>id</code> 表示要限流的对象的唯一标识，可以是用户名，也可以是 IP，或者其他的可以从 <code>ServerWebExchange</code> 中得到的信息。我们看下 <code>RequestRateLimiterGatewayFilterFactory</code> 中对 <code>isAllowed</code> 的调用逻辑：</p>
+<pre class="language-java" data-language="java"><code class="language-java">
+<span class="token annotation punctuation">@Override</span>
+<span class="token keyword">public</span> <span class="token class-name">GatewayFilter</span> <span class="token function">apply</span><span class="token punctuation">(</span><span class="token class-name">Config</span> config<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token comment">// 从配置中得到 KeyResolver</span>
+    <span class="token class-name">KeyResolver</span> resolver <span class="token operator">=</span> <span class="token function">getOrDefault</span><span class="token punctuation">(</span>config<span class="token punctuation">.</span>keyResolver<span class="token punctuation">,</span> defaultKeyResolver<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token comment">// 从配置中得到 RateLimiter</span>
+    <span class="token class-name">RateLimiter</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Object</span><span class="token punctuation">></span></span> limiter <span class="token operator">=</span> <span class="token function">getOrDefault</span><span class="token punctuation">(</span>config<span class="token punctuation">.</span>rateLimiter<span class="token punctuation">,</span>
+            defaultRateLimiter<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">boolean</span> denyEmpty <span class="token operator">=</span> <span class="token function">getOrDefault</span><span class="token punctuation">(</span>config<span class="token punctuation">.</span>denyEmptyKey<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span>denyEmptyKey<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">HttpStatusHolder</span> emptyKeyStatus <span class="token operator">=</span> <span class="token class-name">HttpStatusHolder</span>
+            <span class="token punctuation">.</span><span class="token function">parse</span><span class="token punctuation">(</span><span class="token function">getOrDefault</span><span class="token punctuation">(</span>config<span class="token punctuation">.</span>emptyKeyStatus<span class="token punctuation">,</span> <span class="token keyword">this</span><span class="token punctuation">.</span>emptyKeyStatusCode<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+    <span class="token keyword">return</span> <span class="token punctuation">(</span>exchange<span class="token punctuation">,</span> chain<span class="token punctuation">)</span> <span class="token operator">-></span> resolver<span class="token punctuation">.</span><span class="token function">resolve</span><span class="token punctuation">(</span>exchange<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">defaultIfEmpty</span><span class="token punctuation">(</span>EMPTY_KEY<span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">flatMap</span><span class="token punctuation">(</span>key <span class="token operator">-></span> <span class="token punctuation">&#123;</span>
+                <span class="token comment">// 通过 KeyResolver 得到 key，作为唯一标识 id 传入 isAllowed() 方法</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>EMPTY_KEY<span class="token punctuation">.</span><span class="token function">equals</span><span class="token punctuation">(</span>key<span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                    <span class="token keyword">if</span> <span class="token punctuation">(</span>denyEmpty<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                        <span class="token function">setResponseStatus</span><span class="token punctuation">(</span>exchange<span class="token punctuation">,</span> emptyKeyStatus<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token keyword">return</span> exchange<span class="token punctuation">.</span><span class="token function">getResponse</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">setComplete</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">&#125;</span>
+                    <span class="token keyword">return</span> chain<span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>exchange<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">&#125;</span>
+                <span class="token comment">// 获取当前路由 ID，作为 routeId 参数传入 isAllowed() 方法</span>
+                <span class="token class-name">String</span> routeId <span class="token operator">=</span> config<span class="token punctuation">.</span><span class="token function">getRouteId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token keyword">if</span> <span class="token punctuation">(</span>routeId <span class="token operator">==</span> <span class="token keyword">null</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                    <span class="token class-name">Route</span> route <span class="token operator">=</span> exchange
+                            <span class="token punctuation">.</span><span class="token function">getAttribute</span><span class="token punctuation">(</span><span class="token class-name">ServerWebExchangeUtils</span><span class="token punctuation">.</span>GATEWAY_ROUTE_ATTR<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    routeId <span class="token operator">=</span> route<span class="token punctuation">.</span><span class="token function">getId</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">&#125;</span>
+                <span class="token keyword">return</span> limiter<span class="token punctuation">.</span><span class="token function">isAllowed</span><span class="token punctuation">(</span>routeId<span class="token punctuation">,</span> key<span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">flatMap</span><span class="token punctuation">(</span>response <span class="token operator">-></span> <span class="token punctuation">&#123;</span>
+ 
+                    <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token class-name">Map</span><span class="token punctuation">.</span><span class="token class-name">Entry</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">String</span><span class="token punctuation">,</span> <span class="token class-name">String</span><span class="token punctuation">></span></span> header <span class="token operator">:</span> response<span class="token punctuation">.</span><span class="token function">getHeaders</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+                            <span class="token punctuation">.</span><span class="token function">entrySet</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                        exchange<span class="token punctuation">.</span><span class="token function">getResponse</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getHeaders</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>header<span class="token punctuation">.</span><span class="token function">getKey</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">,</span>
+                                header<span class="token punctuation">.</span><span class="token function">getValue</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">&#125;</span>
+                    <span class="token comment">// 请求允许，直接走到下一个 filter</span>
+                    <span class="token keyword">if</span> <span class="token punctuation">(</span>response<span class="token punctuation">.</span><span class="token function">isAllowed</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                        <span class="token keyword">return</span> chain<span class="token punctuation">.</span><span class="token function">filter</span><span class="token punctuation">(</span>exchange<span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">&#125;</span>
+                    <span class="token comment">// 请求被限流，返回设置的 HTTP 状态码（默认是 429）</span>
+                    <span class="token function">setResponseStatus</span><span class="token punctuation">(</span>exchange<span class="token punctuation">,</span> config<span class="token punctuation">.</span><span class="token function">getStatusCode</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token keyword">return</span> exchange<span class="token punctuation">.</span><span class="token function">getResponse</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">setComplete</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+            <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span>
+</code></pre>
+
+<p>从上面的逻辑可以看出，通过实现 <code>KeyResolver</code> 接口的 <code>resolve</code> 方法就可以自定义要限流的对象了。</p>
+<pre class="language-go" data-language="go"><code class="language-go">public <span class="token keyword">interface</span> KeyResolver <span class="token punctuation">&#123;</span>
+    Mono<span class="token operator">&lt;</span>String<span class="token operator">></span> <span class="token function">resolve</span><span class="token punctuation">(</span>ServerWebExchange exchange<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+
+<p>比如下面的 <code>HostAddrKeyResolver</code> 可以根据 IP 来限流：</p>
+<pre class="language-go" data-language="go"><code class="language-go">public class HostAddrKeyResolver implements KeyResolver <span class="token punctuation">&#123;</span>
+    @Override
+    public Mono<span class="token operator">&lt;</span>String<span class="token operator">></span> <span class="token function">resolve</span><span class="token punctuation">(</span>ServerWebExchange exchange<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">return</span> Mono<span class="token punctuation">.</span><span class="token function">just</span><span class="token punctuation">(</span>exchange<span class="token punctuation">.</span><span class="token function">getRequest</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getRemoteAddress</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getAddress</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getHostAddress</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+
+<p>我们继续看 Spring Cloud Gateway 的代码发现，<code>RateLimiter</code> 接口只提供了一个实现类 <code>RedisRateLimiter</code>：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9tbWJpei5xcGljLmNuL21tYml6X3BuZy93YmlheDR4RUFsNXp5dUhQaWFlZTQweks4dXoxRVh0S0loMGliN1FITnhkWXlWREZFNG9oQnVsd2lhR2IzUmljNmRPRk9QZmY3V1BiVm9MTjN4NlVIY3I1WDR3LzY0MA?x-oss-process=image/format,png" alt="img"></p>
+<p>redis-rate-limiter.png</p>
+<p>很显然是基于 Redis 实现的限流，虽说通过 Redis 也可以实现单机限流，但是总感觉有些大材小用，而且对于那些没有 Redis 的环境很不友好。所以，我们要实现真正的本地限流。</p>
+<p>我们从 Spring Cloud Gateway 的 pull request 中发现了一个新特性 Feature/local-rate-limiter，而且看提交记录，这个新特性很有可能会合并到 3.0.0 版本中。我们不妨来看下这个 local-rate-limiter 的实现：LocalRateLimiter.java，可以看出它是基于 <code>Resilience4j</code> 实现的：</p>
+<pre class="language-java" data-language="java"><code class="language-java">
+<span class="token keyword">public</span> <span class="token class-name">Mono</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Response</span><span class="token punctuation">></span></span> <span class="token function">isAllowed</span><span class="token punctuation">(</span><span class="token class-name">String</span> routeId<span class="token punctuation">,</span> <span class="token class-name">String</span> id<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    <span class="token class-name">Config</span> routeConfig <span class="token operator">=</span> <span class="token function">loadConfiguration</span><span class="token punctuation">(</span>routeId<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+    <span class="token comment">// How many requests per second do you want a user to be allowed to do?</span>
+    <span class="token keyword">int</span> replenishRate <span class="token operator">=</span> routeConfig<span class="token punctuation">.</span><span class="token function">getReplenishRate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+    <span class="token comment">// How many seconds for a token refresh?</span>
+    <span class="token keyword">int</span> refreshPeriod <span class="token operator">=</span> routeConfig<span class="token punctuation">.</span><span class="token function">getRefreshPeriod</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+    <span class="token comment">// How many tokens are requested per request?</span>
+    <span class="token keyword">int</span> requestedTokens <span class="token operator">=</span> routeConfig<span class="token punctuation">.</span><span class="token function">getRequestedTokens</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+    <span class="token keyword">final</span> io<span class="token punctuation">.</span>github<span class="token punctuation">.</span>resilience4j<span class="token punctuation">.</span>ratelimiter<span class="token punctuation">.</span><span class="token class-name">RateLimiter</span> rateLimiter <span class="token operator">=</span> <span class="token class-name">RateLimiterRegistry</span>
+            <span class="token punctuation">.</span><span class="token function">ofDefaults</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+            <span class="token punctuation">.</span><span class="token function">rateLimiter</span><span class="token punctuation">(</span>id<span class="token punctuation">,</span> <span class="token function">createRateLimiterConfig</span><span class="token punctuation">(</span>refreshPeriod<span class="token punctuation">,</span> replenishRate<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+    <span class="token keyword">final</span> <span class="token keyword">boolean</span> allowed <span class="token operator">=</span> rateLimiter<span class="token punctuation">.</span><span class="token function">acquirePermission</span><span class="token punctuation">(</span>requestedTokens<span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">final</span> <span class="token class-name">Long</span> tokensLeft <span class="token operator">=</span> <span class="token punctuation">(</span><span class="token keyword">long</span><span class="token punctuation">)</span> rateLimiter<span class="token punctuation">.</span><span class="token function">getMetrics</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">getAvailablePermissions</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+    <span class="token class-name">Response</span> response <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Response</span><span class="token punctuation">(</span>allowed<span class="token punctuation">,</span> <span class="token function">getHeaders</span><span class="token punctuation">(</span>routeConfig<span class="token punctuation">,</span> tokensLeft<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token class-name">Mono</span><span class="token punctuation">.</span><span class="token function">just</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+
+<p>有意思的是，这个类 还有一个早期版本，是基于 Bucket4j 实现的：</p>
+<pre class="language-java" data-language="java"><code class="language-java">
+<span class="token keyword">public</span> <span class="token class-name">Mono</span><span class="token generics"><span class="token punctuation">&lt;</span><span class="token class-name">Response</span><span class="token punctuation">></span></span> <span class="token function">isAllowed</span><span class="token punctuation">(</span><span class="token class-name">String</span> routeId<span class="token punctuation">,</span> <span class="token class-name">String</span> id<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+ 
+    <span class="token class-name">Config</span> routeConfig <span class="token operator">=</span> <span class="token function">loadConfiguration</span><span class="token punctuation">(</span>routeId<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+    <span class="token comment">// How many requests per second do you want a user to be allowed to do?</span>
+    <span class="token keyword">int</span> replenishRate <span class="token operator">=</span> routeConfig<span class="token punctuation">.</span><span class="token function">getReplenishRate</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+    <span class="token comment">// How much bursting do you want to allow?</span>
+    <span class="token keyword">int</span> burstCapacity <span class="token operator">=</span> routeConfig<span class="token punctuation">.</span><span class="token function">getBurstCapacity</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+    <span class="token comment">// How many tokens are requested per request?</span>
+    <span class="token keyword">int</span> requestedTokens <span class="token operator">=</span> routeConfig<span class="token punctuation">.</span><span class="token function">getRequestedTokens</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+    <span class="token keyword">final</span> <span class="token class-name">Bucket</span> bucket <span class="token operator">=</span> bucketMap<span class="token punctuation">.</span><span class="token function">computeIfAbsent</span><span class="token punctuation">(</span>id<span class="token punctuation">,</span>
+            <span class="token punctuation">(</span>key<span class="token punctuation">)</span> <span class="token operator">-></span> <span class="token function">createBucket</span><span class="token punctuation">(</span>replenishRate<span class="token punctuation">,</span> burstCapacity<span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+    <span class="token keyword">final</span> <span class="token keyword">boolean</span> allowed <span class="token operator">=</span> bucket<span class="token punctuation">.</span><span class="token function">tryConsume</span><span class="token punctuation">(</span>requestedTokens<span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+    <span class="token class-name">Response</span> response <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Response</span><span class="token punctuation">(</span>allowed<span class="token punctuation">,</span>
+            <span class="token function">getHeaders</span><span class="token punctuation">(</span>routeConfig<span class="token punctuation">,</span> bucket<span class="token punctuation">.</span><span class="token function">getAvailableTokens</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">return</span> <span class="token class-name">Mono</span><span class="token punctuation">.</span><span class="token function">just</span><span class="token punctuation">(</span>response<span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+
+<p>实现方式都是类似的，在上面对 Bucket4j 和 Resilience4j 已经作了比较详细的介绍，这里不再赘述。不过从这里也可以看出 Spring 生态圈对 Resilience4j 是比较看好的，我们也可以将其引入到我们的项目中。</p>
+<h3 id="4-2-实现分布式请求频率限流"><a href="#4-2-实现分布式请求频率限流" class="headerlink" title="4.2 实现分布式请求频率限流"></a>4.2 实现分布式请求频率限流</h3><p>上面介绍了如何实现单机请求频率限流，接下来再看下分布式请求频率限流。这个就比较简单了，因为上面说了，Spring Cloud Gateway 自带了一个限流实现，就是 <code>RedisRateLimiter</code>，可以用于分布式限流。它的实现原理依然是基于令牌桶算法的，不过实现逻辑是放在一段 lua 脚本中的，我们可以在 <code>src/main/resources/META-INF/scripts</code> 目录下找到该脚本文件 <code>request_rate_limiter.lua</code>：</p>
+<pre class="language-lua" data-language="lua"><code class="language-lua">
+<span class="token keyword">local</span> tokens_key <span class="token operator">=</span> KEYS<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span>
+<span class="token keyword">local</span> timestamp_key <span class="token operator">=</span> KEYS<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span>
+ 
+<span class="token keyword">local</span> rate <span class="token operator">=</span> <span class="token function">tonumber</span><span class="token punctuation">(</span>ARGV<span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token keyword">local</span> capacity <span class="token operator">=</span> <span class="token function">tonumber</span><span class="token punctuation">(</span>ARGV<span class="token punctuation">[</span><span class="token number">2</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token keyword">local</span> now <span class="token operator">=</span> <span class="token function">tonumber</span><span class="token punctuation">(</span>ARGV<span class="token punctuation">[</span><span class="token number">3</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+<span class="token keyword">local</span> requested <span class="token operator">=</span> <span class="token function">tonumber</span><span class="token punctuation">(</span>ARGV<span class="token punctuation">[</span><span class="token number">4</span><span class="token punctuation">]</span><span class="token punctuation">)</span>
+ 
+<span class="token keyword">local</span> fill_time <span class="token operator">=</span> capacity<span class="token operator">/</span>rate
+<span class="token keyword">local</span> ttl <span class="token operator">=</span> math<span class="token punctuation">.</span><span class="token function">floor</span><span class="token punctuation">(</span>fill_time<span class="token operator">*</span><span class="token number">2</span><span class="token punctuation">)</span>
+ 
+<span class="token keyword">local</span> last_tokens <span class="token operator">=</span> <span class="token function">tonumber</span><span class="token punctuation">(</span>redis<span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token string">"get"</span><span class="token punctuation">,</span> tokens_key<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">if</span> last_tokens <span class="token operator">==</span> <span class="token keyword">nil</span> <span class="token keyword">then</span>
+  last_tokens <span class="token operator">=</span> capacity
+<span class="token keyword">end</span>
+ 
+<span class="token keyword">local</span> last_refreshed <span class="token operator">=</span> <span class="token function">tonumber</span><span class="token punctuation">(</span>redis<span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token string">"get"</span><span class="token punctuation">,</span> timestamp_key<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">if</span> last_refreshed <span class="token operator">==</span> <span class="token keyword">nil</span> <span class="token keyword">then</span>
+  last_refreshed <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token keyword">end</span>
+ 
+<span class="token keyword">local</span> delta <span class="token operator">=</span> math<span class="token punctuation">.</span><span class="token function">max</span><span class="token punctuation">(</span><span class="token number">0</span><span class="token punctuation">,</span> now<span class="token operator">-</span>last_refreshed<span class="token punctuation">)</span>
+<span class="token keyword">local</span> filled_tokens <span class="token operator">=</span> math<span class="token punctuation">.</span><span class="token function">min</span><span class="token punctuation">(</span>capacity<span class="token punctuation">,</span> last_tokens<span class="token operator">+</span><span class="token punctuation">(</span>delta<span class="token operator">*</span>rate<span class="token punctuation">)</span><span class="token punctuation">)</span>
+<span class="token keyword">local</span> allowed <span class="token operator">=</span> filled_tokens <span class="token operator">>=</span> requested
+<span class="token keyword">local</span> new_tokens <span class="token operator">=</span> filled_tokens
+<span class="token keyword">local</span> allowed_num <span class="token operator">=</span> <span class="token number">0</span>
+<span class="token keyword">if</span> allowed <span class="token keyword">then</span>
+  new_tokens <span class="token operator">=</span> filled_tokens <span class="token operator">-</span> requested
+  allowed_num <span class="token operator">=</span> <span class="token number">1</span>
+<span class="token keyword">end</span>
+ 
+<span class="token keyword">if</span> ttl <span class="token operator">></span> <span class="token number">0</span> <span class="token keyword">then</span>
+  redis<span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token string">"setex"</span><span class="token punctuation">,</span> tokens_key<span class="token punctuation">,</span> ttl<span class="token punctuation">,</span> new_tokens<span class="token punctuation">)</span>
+  redis<span class="token punctuation">.</span><span class="token function">call</span><span class="token punctuation">(</span><span class="token string">"setex"</span><span class="token punctuation">,</span> timestamp_key<span class="token punctuation">,</span> ttl<span class="token punctuation">,</span> now<span class="token punctuation">)</span>
+<span class="token keyword">end</span>
+ 
+<span class="token keyword">return</span> <span class="token punctuation">&#123;</span> allowed_num<span class="token punctuation">,</span> new_tokens <span class="token punctuation">&#125;</span></code></pre>
+
+<p>这段代码和上面介绍令牌桶算法时用 Java 实现的那段经典代码几乎是一样的。这里使用 lua 脚本，主要是利用了 Redis 的单线程特性，以及执行 lua 脚本的原子性，避免了并发访问时可能出现请求量超出上限的现象。想象目前令牌桶中还剩 1 个令牌，此时有两个请求同时到来，判断令牌是否足够也是同时的，两个请求都认为还剩 1 个令牌，于是两个请求都被允许了。</p>
+<p>有两种方式来配置 Spring Cloud Gateway 自带的限流。第一种方式是通过配置文件，比如下面所示的代码，可以对某个 route 进行限流：</p>
+<pre class="language-java" data-language="java"><code class="language-java">spring<span class="token operator">:</span>
+  cloud<span class="token operator">:</span>
+    gateway<span class="token operator">:</span>
+      routes<span class="token operator">:</span>
+      <span class="token operator">-</span> id<span class="token operator">:</span> test
+        uri<span class="token operator">:</span> http<span class="token operator">:</span><span class="token operator">/</span><span class="token operator">/</span>httpbin<span class="token punctuation">.</span>org<span class="token operator">:</span><span class="token number">80</span><span class="token operator">/</span>get
+        filters<span class="token operator">:</span>
+        <span class="token operator">-</span> name<span class="token operator">:</span> <span class="token class-name">RequestRateLimiter</span>
+          args<span class="token operator">:</span>
+            key<span class="token operator">-</span>resolver<span class="token operator">:</span> <span class="token string">'#&#123;@hostAddrKeyResolver&#125;'</span>
+            redis<span class="token operator">-</span>rate<span class="token operator">-</span>limiter<span class="token punctuation">.</span>replenishRate<span class="token operator">:</span> <span class="token number">1</span></code></pre>
+
+<p>其中，<code>key-resolver</code> 使用 SpEL 表达式 <code>#&#123;@beanName&#125;</code> 从 Spring 容器中获取 <code>hostAddrKeyResolver</code> 对象，<code>burstCapacity</code> 表示令牌桶的大小，<code>replenishRate</code> 表示每秒往桶中填充多少个令牌，也就是填充速度。</p>
+<p>第二种方式是通过下面的代码来配置：</p>
+<pre class="language-java" data-language="java"><code class="language-java">
+<span class="token annotation punctuation">@Bean</span>
+<span class="token keyword">public</span> <span class="token class-name">RouteLocator</span> <span class="token function">myRoutes</span><span class="token punctuation">(</span><span class="token class-name">RouteLocatorBuilder</span> builder<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+  <span class="token keyword">return</span> builder<span class="token punctuation">.</span><span class="token function">routes</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">route</span><span class="token punctuation">(</span>p <span class="token operator">-></span> p
+      <span class="token punctuation">.</span><span class="token function">path</span><span class="token punctuation">(</span><span class="token string">"/get"</span><span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">filters</span><span class="token punctuation">(</span>filter <span class="token operator">-></span> filter<span class="token punctuation">.</span><span class="token function">requestRateLimiter</span><span class="token punctuation">(</span><span class="token punctuation">)</span>
+        <span class="token punctuation">.</span><span class="token function">rateLimiter</span><span class="token punctuation">(</span><span class="token class-name">RedisRateLimiter</span><span class="token punctuation">.</span><span class="token keyword">class</span><span class="token punctuation">,</span> rl <span class="token operator">-></span> rl<span class="token punctuation">.</span><span class="token function">setBurstCapacity</span><span class="token punctuation">(</span><span class="token number">3</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">setReplenishRate</span><span class="token punctuation">(</span><span class="token number">1</span><span class="token punctuation">)</span><span class="token punctuation">)</span><span class="token punctuation">.</span><span class="token function">and</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+      <span class="token punctuation">.</span><span class="token function">uri</span><span class="token punctuation">(</span><span class="token string">"http://httpbin.org:80"</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+    <span class="token punctuation">.</span><span class="token function">build</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+
+<p>这样就可以对某个 route 进行限流了。但是这里有一点要注意，Spring Cloud Gateway 自带的限流器有一个很大的坑，replenishRate 不支持设置小数，也就是说往桶中填充的 token 的速度最少为每秒 1 个，所以，如果我的限流规则是每分钟 10 个请求（按理说应该每 6 秒填充一次，或每秒填充 1/6 个 token），这种情况 Spring Cloud Gateway 就没法正确的限流。网上也有人提了 issue，support greater than a second resolution for the rate limiter，但还没有得到解决。</p>
+<h3 id="4-3-实现单机并发量限流"><a href="#4-3-实现单机并发量限流" class="headerlink" title="4.3 实现单机并发量限流"></a>4.3 实现单机并发量限流</h3><p>上面学习 Resilience4j 的时候，我们提到了 Resilience4j 的一个功能特性，叫 <strong>隔离（Bulkhead）</strong>。Bulkhead 这个单词的意思是船的舱壁，利用舱壁可以将不同的船舱隔离起来，这样如果一个船舱破损进水，那么只损失这一个船舱，其它船舱可以不受影响。借鉴造船行业的经验，这种模式也被引入到软件行业，我们把它叫做 舱壁模式（Bulkhead pattern）。舱壁模式一般用于服务隔离，对于一些比较重要的系统资源，如 CPU、内存、连接数等，可以为每个服务设置各自的资源限制，防止某个异常的服务把系统的所有资源都消耗掉。这种服务隔离的思想同样可以用来做并发量限流。</p>
+<p>正如前文所述，Resilience4j 提供了两种 Bulkhead 的实现：<code>SemaphoreBulkhead</code> 和 <code>ThreadPoolBulkhead</code>，这也正是舱壁模式常见的两种实现方案：一种是带计数的信号量，一种是固定大小的线程池。考虑到多线程场景下的线程切换成本，默认推荐使用信号量。</p>
+<p>在操作系统基础课程中，我们学习过两个名词：<strong>互斥量（Mutex）</strong> 和 <strong>信号量（Semaphores）</strong>。互斥量用于线程的互斥，它和临界区有点相似，只有拥有互斥对象的线程才有访问资源的权限，由于互斥对象只有一个，因此任何情况下只会有一个线程在访问此共享资源，从而保证了多线程可以安全的访问和操作共享资源。而信号量是用于线程的同步，这是由荷兰科学家 E.W.Dijkstra 提出的概念，它和互斥量不同，信号允许多个线程同时使用共享资源，但是它同时设定了访问共享资源的线程最大数目，从而可以进行并发量控制。</p>
+<p>下面是使用信号量限制并发访问的一个简单例子：</p>
+<pre class="language-java" data-language="java"><code class="language-java">
+<span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">SemaphoreTest</span> <span class="token punctuation">&#123;</span>
+ 
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token class-name">ExecutorService</span> threadPool <span class="token operator">=</span> <span class="token class-name">Executors</span><span class="token punctuation">.</span><span class="token function">newFixedThreadPool</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token class-name">Semaphore</span> semaphore <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Semaphore</span><span class="token punctuation">(</span><span class="token number">10</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">100</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            threadPool<span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Runnable</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token annotation punctuation">@Override</span>
+                <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                    <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+                        semaphore<span class="token punctuation">.</span><span class="token function">acquire</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Request processing ..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        semaphore<span class="token punctuation">.</span><span class="token function">release</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                        e<span class="token punctuation">.</span><span class="token function">printStack</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">&#125;</span>
+                <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        threadPool<span class="token punctuation">.</span><span class="token function">shutdown</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+
+<p>这里我们创建了 100 个线程同时执行，但是由于信号量计数为 10，所以同时只能有 10 个线程在处理请求。说到计数，实际上，在 Java 里除了 <code>Semaphore</code> 还有很多类也可以用作计数，比如 <code>AtomicLong</code> 或 <code>LongAdder</code>，这在并发量限流中非常常见，只是无法提供像信号量那样的阻塞能力：</p>
+<pre class="language-java" data-language="java"><code class="language-java"><span class="token keyword">public</span> <span class="token keyword">class</span> <span class="token class-name">AtomicLongTest</span> <span class="token punctuation">&#123;</span>
+ 
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token class-name">ExecutorService</span> threadPool <span class="token operator">=</span> <span class="token class-name">Executors</span><span class="token punctuation">.</span><span class="token function">newFixedThreadPool</span><span class="token punctuation">(</span><span class="token number">100</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token keyword">private</span> <span class="token keyword">static</span> <span class="token class-name">AtomicLong</span> atomic <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">AtomicLong</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+ 
+    <span class="token keyword">public</span> <span class="token keyword">static</span> <span class="token keyword">void</span> <span class="token function">main</span><span class="token punctuation">(</span><span class="token class-name">String</span><span class="token punctuation">[</span><span class="token punctuation">]</span> args<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+        <span class="token keyword">for</span> <span class="token punctuation">(</span><span class="token keyword">int</span> i <span class="token operator">=</span> <span class="token number">0</span><span class="token punctuation">;</span> i <span class="token operator">&lt;</span> <span class="token number">100</span><span class="token punctuation">;</span> i<span class="token operator">++</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+            threadPool<span class="token punctuation">.</span><span class="token function">execute</span><span class="token punctuation">(</span><span class="token keyword">new</span> <span class="token class-name">Runnable</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                <span class="token annotation punctuation">@Override</span>
+                <span class="token keyword">public</span> <span class="token keyword">void</span> <span class="token function">run</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                    <span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+                        <span class="token keyword">if</span><span class="token punctuation">(</span>atomic<span class="token punctuation">.</span><span class="token function">incrementAndGet</span><span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">></span> <span class="token number">10</span><span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                            <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Request rejected ..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                            <span class="token keyword">return</span><span class="token punctuation">;</span>
+                        <span class="token punctuation">&#125;</span>
+                        <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Request processing ..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                        atomic<span class="token punctuation">.</span><span class="token function">decrementAndGet</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+                        e<span class="token punctuation">.</span><span class="token function">printStack</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+                    <span class="token punctuation">&#125;</span>
+                <span class="token punctuation">&#125;</span>
+            <span class="token punctuation">&#125;</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+        <span class="token punctuation">&#125;</span>
+        threadPool<span class="token punctuation">.</span><span class="token function">shutdown</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token punctuation">&#125;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+
+<h3 id="4-4-实现分布式并发量限流"><a href="#4-4-实现分布式并发量限流" class="headerlink" title="4.4 实现分布式并发量限流"></a>4.4 实现分布式并发量限流</h3><p>通过在单机实现并发量限流，我们掌握了几种常用的手段：信号量、线程池、计数器，这些都是单机上的概念。那么稍微拓展下，如果能实现分布式信号量、分布式线程池、分布式计数器，那么实现分布式并发量限流不就易如反掌了吗？</p>
+<p>关于分布式线程池，是我自己杜撰的词，在网上并没有找到类似的概念，比较接近的概念是资源调度和分发，但是又感觉不像，这里直接忽略吧。</p>
+<p>关于分布式信号量，还真有这样的东西，比如 Apache Ignite 就提供了 <code>IgniteSemaphore</code> 用于创建分布式信号量，它的使用方式和 <code>Semaphore</code> 非常类似，参考这里。使用 Redis 的 ZSet 也可以实现分布式信号量，比如 这篇博客介绍的方法，还有《Redis in Action》这本电子书中也提到了这样的例子，教你如何实现 Counting semaphores。另外，Redisson 也实现了基于 Redis 的分布式信号量 RSemaphore，用法也和 <code>Semaphore</code> 类似。使用分布式信号量可以很容易实现分布式并发量限流，实现方式和上面的单机并发量限流几乎是一样的。</p>
+<p>最后，关于分布式计数器，实现方案也是多种多样。比如使用 Redis 的 <code>INCR</code> 就很容易实现，更有甚者，使用 MySQL 数据库也可以实现。只不过使用计数器要注意操作的原子性，每次请求时都要经过这三步操作：取计数器当前的值、判断是否超过阈值，超过则拒绝、将计数器的值自增。这其实和信号量的 P 操作是一样的，而释放就对应 V 操作。</p>
+<p>所以，利用分布式信号量和计数器就可以实现并发量限流了吗？问题当然没有这么简单。实际上，上面通过信号量和计数器实现单机并发量限流的代码片段有一个严重 BUG：</p>
+<pre class="language-go" data-language="go"><code class="language-go">semaphore<span class="token punctuation">.</span><span class="token function">acquire</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+System<span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Request processing ..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+semaphore<span class="token punctuation">.</span><span class="token function">release</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span></code></pre>
+
+<p>想象一下如果在处理请求时出现异常了会怎么样？很显然，信号量被该线程获取了，但是却永远不会释放，如果请求异常多了，这将导致信号量被占满，最后一个请求也进不来。在单机场景下，这个问题可以很容易解决，加一个 finally 就行了：</p>
+<pre class="language-java" data-language="java"><code class="language-java"><span class="token keyword">try</span> <span class="token punctuation">&#123;</span>
+    semaphore<span class="token punctuation">.</span><span class="token function">acquire</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+    <span class="token class-name">System</span><span class="token punctuation">.</span>out<span class="token punctuation">.</span><span class="token function">println</span><span class="token punctuation">(</span><span class="token string">"Request processing ..."</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span> <span class="token keyword">catch</span> <span class="token punctuation">(</span><span class="token class-name">InterruptedException</span> e<span class="token punctuation">)</span> <span class="token punctuation">&#123;</span>
+    e<span class="token punctuation">.</span><span class="token function">printStack</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span> <span class="token keyword">finally</span> <span class="token punctuation">&#123;</span>
+    semaphore<span class="token punctuation">.</span><span class="token function">release</span><span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token punctuation">;</span>
+<span class="token punctuation">&#125;</span></code></pre>
+
+<p>由于无论出现何种异常，finally 中的代码一定会执行，这样就保证了信号量一定会被释放。但是在分布式系统中，就不是加一个 finally 这么简单了。这是因为在分布式系统中可能存在的异常不一定是可被捕获的代码异常，还有可能是服务崩溃或者不可预知的系统宕机，就算是正常的服务重启也可能导致分布式信号量无法释放。</p>
+<p>对于这个问题，我和几个同事连续讨论了几个晚上，想出了两种解决方法：第一种方法是使用带 TTL 的计数器，第二种方法是基于双窗口滑动的一种比较 tricky 的算法。</p>
+<p>第一种方法比较容易理解，我们为每个请求赋予一个唯一 ID，并在 Redis 里写入一个键值对，key 为 <code>requests_xxx</code>（xxx 为请求 ID），value 为 1，并给这个 key 设置一个 TTL（如果你的应用中存在耗时非常长的请求，譬如对于一些 WebSockket 请求可能会持续几个小时，还需要开一个线程定期去刷新这个 key 的 TTL）。然后在判断并发量时，使用 <code>KEYS</code> 命令查询 <code>requests_*</code> 开头的 key 的个数，就可以知道当前一共有多少个请求，如果超过并发量上限则拒绝请求。这种方法可以很好的应对服务崩溃或重启的问题，由于每个 key 都设置了 TTL，所以经过一段时间后，这些 key 就会自动消失，就不会出现信号量占满不释放的情况了。但是这里使用 <code>KEYS</code> 命令查询请求个数是一个非常低效的做法，在请求量比较多的情况下，网关的性能会受到严重影响。我们可以把 <code>KEYS</code> 命令换成 <code>SCAN</code>，性能会得到些许提升，但总体来说效果还是很不理想的。</p>
+<p>针对第一种方法，我们可以进一步优化，不用为每个请求写一个键值对，而是为每个分布式系统中的每个实例赋予一个唯一 ID，并在 Redis 里写一个键值对，key 为 <code>instances_xxx</code>（xxx 为实例 ID），value 为这个实例当前的并发量。同样的，我们为这个 key 设置一个 TTL，并且开启一个线程定期去刷新这个 TTL。每接受一个请求后，计数器加一，请求结束，计数器减一，这和单机场景下的处理方式一样，只不过在判断并发量时，还是需要使用 <code>KEYS</code> 或 <code>SCAN</code> 获取所有的实例，并计算出并发量的总和。不过由于实例个数是有限的，性能比之前的做法有了明显的提升。</p>
+<p>第二种方法我称之为 <strong>双窗口滑动算法</strong>，结合了 TTL 计数器和滑动窗口算法。我们按分钟来设置一个时间窗口，在 Redis 里对应 <code>202009051130</code> 这样的一个 key，value 为计数器，表示请求的数量。当接受一个请求后，在当前的时间窗口中加一，当请求结束，在当前的时间窗口中减一，注意，接受请求和请求结束的时间窗口可能不是同一个。另外，我们还需要一个本地列表来记录当前实例正在处理的所有请求和请求对应的时间窗口，并通过一个小于时间窗口的定时线程（如 30 秒）来迁移过期的请求，所谓过期，指的是请求的时间窗口和当前时间窗口不一致。那么具体如何迁移呢？我们首先需要统计列表中一共有多少请求过期了，然后将列表中的过期请求时间更新为当前时间窗口，并从 Redis 中上一个时间窗口移动相应数量到当前时间窗口，也就是上一个时间窗口减 X，当前时间窗口加 X。由于迁移线程定期执行，所以过期的请求总是会被移动到当前窗口，最终 Redis 中只有当前时间窗口和上个时间窗口这两个时间窗口中有数据，再早一点的窗口时间中的数据会被往后迁移，所以可以给这个 key 设置一个 3 分钟或 5 分钟的 TTL。判断并发量时，由于只有两个 key，只需要使用 <code>MGET</code> 获取两个值相加即可。下面的流程图详细描述了算法的运行过程：</p>
+<p><img src="https://imgconvert.csdnimg.cn/aHR0cHM6Ly9tbWJpei5xcGljLmNuL21tYml6X2pwZy93YmlheDR4RUFsNXp5dUhQaWFlZTQweks4dXoxRVh0S0loYlVQUzRHYTFYem90aGF2VWhJTXo5ZnBxc2gwS1FZekRyNWczbm1hVGFESVZSaWJLN1FpYkRaSEEvNjQw?x-oss-process=image/format,png" alt="img"></p>
+<p>其中有几个需要注意的细节：</p>
+<ol>
+<li>请求结束时，直接在 Redis 中当前时间窗口减一即可，就算是负数也没关系。请求列表中的该请求不用急着删除，可以打上结束标记，在迁移线程中统一删除（当然，如果请求的开始时间和结束时间在同一个窗口，可以直接删除）；</li>
+<li>迁移的时间间隔要小于时间窗口，一般设置为 30s；</li>
+<li>Redis 中的 key 一定要设置 TTL，时间至少为 2 个时间窗口，一般设置为 3 分钟；</li>
+<li>迁移过程涉及到“从上一个时间窗口减”和“在当前时间窗口加”两个操作，要注意操作的原子性；</li>
+<li>获取当前并发量可以通过 <code>MGET</code> 一次性读取两个时间窗口的值，不用 <code>GET</code> 两次；</li>
+<li>获取并发量和判断并发量是否超限，这个过程也要注意操作的原子性。</li>
+</ol>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>网关作为微服务架构中的重要一环，充当着一夫当关万夫莫开的角色，所以对网关服务的稳定性要求和性能要求都非常高。为保证网关服务的稳定性，一代又一代的程序员们前仆后继，想出了十八般武艺：限流、熔断、隔离、缓存、降级、等等等等。这篇文章从限流入手，详细介绍了限流的场景和算法，以及源码实现和可能踩到的坑。尽管限流只是网关的一个非常小的功能，但却影响到网关的方方面面，在系统架构的设计中至关重要。虽然我试着从不同的角度希望把限流介绍的更完全，但终究是管中窥豹，只见一斑，还有很多的内容没有介绍到，比如阿里开源的 Sentinel 组件也可以用于限流，因为篇幅有限未能展开。另外前文提到的 Netflix 不再维护 Hystrix 项目，这是因为他们把精力放到另一个限流项目 concurrency-limits 上了，这个项目的目标是打造一款自适应的，极具弹性的限流组件，它借鉴了 <strong>TCP 拥塞控制的算法（TCP congestion control algorithm）</strong>，实现系统的自动限流，感兴趣的同学可以去它的项目主页了解更多内容。</p>
+<h1 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h1><blockquote>
+<p><a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_38405253/article/details/108891772">https://blog.csdn.net/weixin_38405253/article/details/108891772</a></p>
+</blockquote>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">wumu</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://wumuwumu.github.io/2021/01/26/java/SpringCloud/SpringCloudGateway%E5%AD%A6%E4%B9%A05-%E9%99%90%E6%B5%81%EF%BC%88%E8%AF%A6%E7%BB%86%E7%89%88%EF%BC%89/">http://wumuwumu.github.io/2021/01/26/java/SpringCloud/SpringCloudGateway%E5%AD%A6%E4%B9%A05-%E9%99%90%E6%B5%81%EF%BC%88%E8%AF%A6%E7%BB%86%E7%89%88%EF%BC%89/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">wumu</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            <span class="chip bg-color">无标签</span>
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/20201/01/25/java/SpringCloud/SpringCloudGateway%E5%AD%A6%E4%B9%A04-WebFlux/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/5.jpg" class="responsive-img" alt="SpringCloudGateway基本操作-WebFlux">
+                        
+                        <span class="card-title">SpringCloudGateway基本操作-WebFlux</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>20201-01-25
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            wumu
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2021/01/26/java/SpringCloud/SpringCloudGateway%E5%AD%A6%E4%B9%A06-%E7%86%94%E6%96%AD/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/19.jpg" class="responsive-img" alt="SpringCloudGateway基础操作-熔断">
+                        
+                        <span class="card-title">SpringCloudGateway基础操作-熔断</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2021-01-26
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            wumu
+                            
+                        </span>
+                    </div>
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2019-2021</span>
+            
+            <span id="year">2019</span>
+            <a href="/about" target="_blank">wumu</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/blinkfox" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:1181062873@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1181062873" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1181062873" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>

@@ -1,0 +1,1712 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+
+<head>
+    <meta charset="utf-8">
+    <meta name="keywords" content="docker教程, blog">
+    <meta name="description" content="起风了，唯有努力生存">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <meta name="renderer" content="webkit|ie-stand|ie-comp">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <!-- Global site tag (gtag.js) - Google Analytics -->
+
+
+    <title>docker教程 | wumu&#39;s blog</title>
+    <link rel="icon" type="image/png" href="/favicon.png">
+
+    <link rel="stylesheet" type="text/css" href="/libs/awesome/css/all.css">
+    <link rel="stylesheet" type="text/css" href="/libs/materialize/materialize.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/aos/aos.css">
+    <link rel="stylesheet" type="text/css" href="/libs/animate/animate.min.css">
+    <link rel="stylesheet" type="text/css" href="/libs/lightGallery/css/lightgallery.min.css">
+    <link rel="stylesheet" type="text/css" href="/css/matery.css">
+    <link rel="stylesheet" type="text/css" href="/css/my.css">
+
+    <script src="/libs/jquery/jquery.min.js"></script>
+
+<meta name="generator" content="Hexo 5.2.0"><link rel="alternate" href="/atom.xml" title="wumu's blog" type="application/atom+xml">
+</head>
+
+
+
+
+<body>
+    <header class="navbar-fixed">
+    <nav id="headNav" class="bg-color nav-transparent">
+        <div id="navContainer" class="nav-wrapper container">
+            <div class="brand-logo">
+                <a href="/" class="waves-effect waves-light">
+                    
+                    <img src="/medias/logo.png" class="logo-img" alt="LOGO">
+                    
+                    <span class="logo-span">wumu&#39;s blog</span>
+                </a>
+            </div>
+            
+
+<a href="#" data-target="mobile-nav" class="sidenav-trigger button-collapse"><i class="fas fa-bars"></i></a>
+<ul class="right nav-menu">
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/" class="waves-effect waves-light">
+      
+      <i class="fas fa-home" style="zoom: 0.6;"></i>
+      
+      <span>首页</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/tags" class="waves-effect waves-light">
+      
+      <i class="fas fa-tags" style="zoom: 0.6;"></i>
+      
+      <span>标签</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/categories" class="waves-effect waves-light">
+      
+      <i class="fas fa-bookmark" style="zoom: 0.6;"></i>
+      
+      <span>分类</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/archives" class="waves-effect waves-light">
+      
+      <i class="fas fa-archive" style="zoom: 0.6;"></i>
+      
+      <span>归档</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/about" class="waves-effect waves-light">
+      
+      <i class="fas fa-user-circle" style="zoom: 0.6;"></i>
+      
+      <span>关于</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/contact" class="waves-effect waves-light">
+      
+      <i class="fas fa-comments" style="zoom: 0.6;"></i>
+      
+      <span>留言板</span>
+    </a>
+    
+  </li>
+  
+  <li class="hide-on-med-and-down nav-item">
+    
+    <a href="/friends" class="waves-effect waves-light">
+      
+      <i class="fas fa-address-book" style="zoom: 0.6;"></i>
+      
+      <span>友情链接</span>
+    </a>
+    
+  </li>
+  
+  <li>
+    <a href="#searchModal" class="modal-trigger waves-effect waves-light">
+      <i id="searchIcon" class="fas fa-search" title="搜索" style="zoom: 0.85;"></i>
+    </a>
+  </li>
+</ul>
+
+
+<div id="mobile-nav" class="side-nav sidenav">
+
+    <div class="mobile-head bg-color">
+        
+        <img src="/medias/logo.png" class="logo-img circle responsive-img">
+        
+        <div class="logo-name">wumu&#39;s blog</div>
+        <div class="logo-desc">
+            
+            起风了，唯有努力生存
+            
+        </div>
+    </div>
+
+    
+
+    <ul class="menu-list mobile-menu-list">
+        
+        <li class="m-nav-item">
+	  
+		<a href="/" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-home"></i>
+			
+			首页
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/tags" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-tags"></i>
+			
+			标签
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/categories" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-bookmark"></i>
+			
+			分类
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/archives" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-archive"></i>
+			
+			归档
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/about" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-user-circle"></i>
+			
+			关于
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/contact" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-comments"></i>
+			
+			留言板
+		</a>
+          
+        </li>
+        
+        <li class="m-nav-item">
+	  
+		<a href="/friends" class="waves-effect waves-light">
+			
+			    <i class="fa-fw fas fa-address-book"></i>
+			
+			友情链接
+		</a>
+          
+        </li>
+        
+        
+        <li><div class="divider"></div></li>
+        <li>
+            <a href="https://github.com/blinkfox/hexo-theme-matery" class="waves-effect waves-light" target="_blank">
+                <i class="fab fa-github-square fa-fw"></i>Fork Me
+            </a>
+        </li>
+        
+    </ul>
+</div>
+
+
+        </div>
+
+        
+            <style>
+    .nav-transparent .github-corner {
+        display: none !important;
+    }
+
+    .github-corner {
+        position: absolute;
+        z-index: 10;
+        top: 0;
+        right: 0;
+        border: 0;
+        transform: scale(1.1);
+    }
+
+    .github-corner svg {
+        color: #0f9d58;
+        fill: #fff;
+        height: 64px;
+        width: 64px;
+    }
+
+    .github-corner:hover .octo-arm {
+        animation: a 0.56s ease-in-out;
+    }
+
+    .github-corner .octo-arm {
+        animation: none;
+    }
+
+    @keyframes a {
+        0%,
+        to {
+            transform: rotate(0);
+        }
+        20%,
+        60% {
+            transform: rotate(-25deg);
+        }
+        40%,
+        80% {
+            transform: rotate(10deg);
+        }
+    }
+</style>
+
+<a href="https://github.com/blinkfox/hexo-theme-matery" class="github-corner tooltipped hide-on-med-and-down" target="_blank"
+   data-tooltip="Fork Me" data-position="left" data-delay="50">
+    <svg viewBox="0 0 250 250" aria-hidden="true">
+        <path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"></path>
+        <path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2"
+              fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"></path>
+        <path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z"
+              fill="currentColor" class="octo-body"></path>
+    </svg>
+</a>
+        
+    </nav>
+
+</header>
+
+    
+
+
+
+<div class="bg-cover pd-header post-cover" style="background-image: url('/medias/featureimages/18.jpg')">
+    <div class="container" style="right: 0px;left: 0px;">
+        <div class="row">
+            <div class="col s12 m12 l12">
+                <div class="brand">
+                    <h1 class="description center-align post-title">docker教程</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+
+
+<main class="post-container content">
+
+    
+    <link rel="stylesheet" href="/libs/tocbot/tocbot.css">
+<style>
+    #articleContent h1::before,
+    #articleContent h2::before,
+    #articleContent h3::before,
+    #articleContent h4::before,
+    #articleContent h5::before,
+    #articleContent h6::before {
+        display: block;
+        content: " ";
+        height: 100px;
+        margin-top: -100px;
+        visibility: hidden;
+    }
+
+    #articleContent :focus {
+        outline: none;
+    }
+
+    .toc-fixed {
+        position: fixed;
+        top: 64px;
+    }
+
+    .toc-widget {
+        width: 345px;
+        padding-left: 20px;
+    }
+
+    .toc-widget .toc-title {
+        padding: 35px 0 15px 17px;
+        font-size: 1.5rem;
+        font-weight: bold;
+        line-height: 1.5rem;
+    }
+
+    .toc-widget ol {
+        padding: 0;
+        list-style: none;
+    }
+
+    #toc-content {
+        padding-bottom: 30px;
+        overflow: auto;
+    }
+
+    #toc-content ol {
+        padding-left: 10px;
+    }
+
+    #toc-content ol li {
+        padding-left: 10px;
+    }
+
+    #toc-content .toc-link:hover {
+        color: #42b983;
+        font-weight: 700;
+        text-decoration: underline;
+    }
+
+    #toc-content .toc-link::before {
+        background-color: transparent;
+        max-height: 25px;
+
+        position: absolute;
+        right: 23.5vw;
+        display: block;
+    }
+
+    #toc-content .is-active-link {
+        color: #42b983;
+    }
+
+    #floating-toc-btn {
+        position: fixed;
+        right: 15px;
+        bottom: 76px;
+        padding-top: 15px;
+        margin-bottom: 0;
+        z-index: 998;
+    }
+
+    #floating-toc-btn .btn-floating {
+        width: 48px;
+        height: 48px;
+    }
+
+    #floating-toc-btn .btn-floating i {
+        line-height: 48px;
+        font-size: 1.4rem;
+    }
+</style>
+<div class="row">
+    <div id="main-content" class="col s12 m12 l9">
+        <!-- 文章内容详情 -->
+<div id="artDetail">
+    <div class="card">
+        <div class="card-content article-info">
+            <div class="row tag-cate">
+                <div class="col s7">
+                    
+                    <div class="article-tag">
+                        
+                            <a href="/tags/docker/">
+                                <span class="chip bg-color">docker</span>
+                            </a>
+                        
+                    </div>
+                    
+                </div>
+                <div class="col s5 right-align">
+                    
+                </div>
+            </div>
+
+            <div class="post-info">
+                
+                <div class="post-date info-break-policy">
+                    <i class="far fa-calendar-minus fa-fw"></i>发布日期:&nbsp;&nbsp;
+                    2019-08-03
+                </div>
+                
+
+                
+
+                
+
+                
+
+                
+            </div>
+        </div>
+        <hr class="clearfix">
+
+        
+        <!-- 是否加载使用自带的 prismjs. -->
+        <link rel="stylesheet" href="/libs/prism/prism.css">
+        
+
+        
+
+        <div class="card-content article-card-content">
+            <div id="articleContent">
+                <h1 id="docker基本命令"><a href="#docker基本命令" class="headerlink" title="docker基本命令"></a>docker基本命令</h1><h2 id="镜像相关"><a href="#镜像相关" class="headerlink" title="镜像相关"></a>镜像相关</h2><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 1. 查找镜像</span>
+docker search mysql
+docker search -s <span class="token number">100</span> mysql <span class="token comment"># 搜索100star以上的mysql镜像</span>
+
+<span class="token comment"># 2. 获取镜像</span>
+docker pull centos7
+
+<span class="token comment"># 3. 查找镜像</span>
+docker image <span class="token function">ls</span>
+
+<span class="token comment"># 4. 删除镜像</span>
+docker rmi od16d0a97dd1 
+
+<span class="token comment"># 5. 创建镜像</span>
+docker build -t nginx:1.14.0 <span class="token builtin class-name">.</span></code></pre>
+
+<h2 id="容器相关"><a href="#容器相关" class="headerlink" title="容器相关"></a>容器相关</h2><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 1. 启动容器</span>
+docker run -it --rm php:7 <span class="token function">bash</span>  <span class="token comment"># 启动一个容器，并分配一个为终端，退出容器就会被删除</span>
+docker run -d -p <span class="token number">9000</span>:9000 php:7 <span class="token comment"># 运行我们常用的容器</span>
+
+<span class="token comment"># 2. 查看容器的信息</span>
+docker inspect a47342323232 <span class="token comment"># image id</span>
+
+<span class="token comment"># 3. 进入容器</span>
+docker <span class="token builtin class-name">exec</span> -it es2dffg2f2gh <span class="token function">bash</span> <span class="token comment">#image id ,bash根据系统会有不同</span>
+
+<span class="token comment"># 4. 停止容器</span>
+docker stop 34fvd234234f
+
+<span class="token comment"># 5. 启动容器</span>
+docker start 3fg23fsfsfs
+
+<span class="token comment"># 6. 查看容器</span>
+docker <span class="token function">ps</span> <span class="token comment"># 查看启动的容器</span>
+docker <span class="token function">ps</span> -a <span class="token comment"># 查看全部容器</span>
+
+<span class="token comment"># 7. 删除容器</span>
+docker <span class="token function">rm</span> d989ds82kjk </code></pre>
+
+<h2 id="volume"><a href="#volume" class="headerlink" title="volume"></a>volume</h2><h3 id="创建"><a href="#创建" class="headerlink" title="创建"></a>创建</h3><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 使用匿名volume</span>
+docker run -v 容器路径 <span class="token punctuation">..</span>.
+
+docker run -v host路径:容器路径 <span class="token punctuation">..</span>.
+
+<span class="token comment"># 使用volumes-from</span>
+<span class="token number">1</span>. 创建一个容器
+<span class="token number">2</span>. Docker run —volumes-from data-container ubuntu ,可以共享文件</code></pre>
+
+<h3 id="删除"><a href="#删除" class="headerlink" title="删除"></a>删除</h3><p>这个功能可能会更加重要，如果你已经使用</p>
+<pre class="language-none"><code class="language-none">docker rm</code></pre>
+
+<p>来删除你的容器，那可能有很多的孤立的Volume仍在占用着空间。</p>
+<p>Volume只有在下列情况下才能被删除：</p>
+<ul>
+<li>该容器是用<code>docker rm －v</code>命令来删除的（<code>-v</code>是必不可少的）。</li>
+<li><code>docker run</code>中使用了<code>--rm</code>参数</li>
+</ul>
+<p>即使用以上两种命令，也只能删除没有容器连接的Volume。连接到用户指定主机目录的Volume永远不会被docker删除。</p>
+<p>除非你已经很小心的，总是像这样来运行容器，否则你将会在</p>
+<pre class="language-none"><code class="language-none">&#x2F;var&#x2F;lib&#x2F;docker&#x2F;vfs&#x2F;dir</code></pre>
+
+<p>目录下得到一些僵尸文件和目录，并且还不容易说出它们到底代表什么。</p>
+<h2 id="dockerfile"><a href="#dockerfile" class="headerlink" title="dockerfile"></a>dockerfile</h2><h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><pre class="language-dockerfile" data-language="dockerfile"><code class="language-dockerfile">FROM debian:wheezy
+MAINTAINER Steeve Morin &quot;steeve.morin@gmail.com&quot;
+
+RUN apt-get update &amp;&amp; apt-get -y install  unzip \
+                        xz-utils \
+                        curl \
+                        bc \
+                        git \
+                        build-essential \
+                        cpio \
+                        gcc-multilib libc6-i386 libc6-dev-i386 \
+                        kmod \
+                        squashfs-tools \
+                        genisoimage \
+                        xorriso \
+                        syslinux \
+                        automake \
+                        pkg-config
+
+ENV KERNEL_VERSION  3.16.1
+ENV AUFS_BRANCH     aufs3.16
+
+# Fetch the kernel sources
+RUN curl --retry 10 https:&#x2F;&#x2F;www.kernel.org&#x2F;pub&#x2F;linux&#x2F;kernel&#x2F;v3.x&#x2F;linux-$KERNEL_VERSION.tar.xz | tar -C &#x2F; -xJ &amp;&amp; \
+    mv &#x2F;linux-$KERNEL_VERSION &#x2F;linux-kernel
+
+# Download AUFS and apply patches and files, then remove it
+RUN git clone -b $AUFS_BRANCH --depth 1 git:&#x2F;&#x2F;git.code.sf.net&#x2F;p&#x2F;aufs&#x2F;aufs3-standalone &amp;&amp; \
+    cd aufs3-standalone &amp;&amp; \
+    cd &#x2F;linux-kernel &amp;&amp; \
+    cp -r &#x2F;aufs3-standalone&#x2F;Documentation &#x2F;linux-kernel &amp;&amp; \
+    cp -r &#x2F;aufs3-standalone&#x2F;fs &#x2F;linux-kernel &amp;&amp; \
+    cp -r &#x2F;aufs3-standalone&#x2F;include&#x2F;uapi&#x2F;linux&#x2F;aufs_type.h &#x2F;linux-kernel&#x2F;include&#x2F;uapi&#x2F;linux&#x2F; &amp;&amp;\
+    for patch in aufs3-kbuild aufs3-base aufs3-mmap aufs3-standalone aufs3-loopback; do \
+        patch -p1 &lt; &#x2F;aufs3-standalone&#x2F;$patch.patch; \
+    done
+
+COPY kernel_config &#x2F;linux-kernel&#x2F;.config
+
+RUN jobs&#x3D;$(nproc); \
+    cd &#x2F;linux-kernel &amp;&amp; \
+    make -j $&#123;jobs&#125; oldconfig &amp;&amp; \
+    make -j $&#123;jobs&#125; bzImage &amp;&amp; \
+    make -j $&#123;jobs&#125; modules
+
+# The post kernel build process
+
+ENV ROOTFS          &#x2F;rootfs
+ENV TCL_REPO_BASE   http:&#x2F;&#x2F;tinycorelinux.net&#x2F;5.x&#x2F;x86
+ENV TCZ_DEPS        iptables \
+                    iproute2 \
+                    openssh openssl-1.0.0 \
+                    tar \
+                    gcc_libs \
+                    acpid \
+                    xz liblzma \
+                    git expat2 libiconv libidn libgpg-error libgcrypt libssh2 \
+                    nfs-utils tcp_wrappers portmap rpcbind libtirpc \
+                    curl ntpclient
+
+# Make the ROOTFS
+RUN mkdir -p $ROOTFS
+
+# Install the kernel modules in $ROOTFS
+RUN cd &#x2F;linux-kernel &amp;&amp; \
+    make INSTALL_MOD_PATH&#x3D;$ROOTFS modules_install firmware_install
+
+# Remove useless kernel modules, based on unclejack&#x2F;debian2docker
+RUN cd $ROOTFS&#x2F;lib&#x2F;modules &amp;&amp; \
+    rm -rf .&#x2F;*&#x2F;kernel&#x2F;sound&#x2F;* &amp;&amp; \
+    rm -rf .&#x2F;*&#x2F;kernel&#x2F;drivers&#x2F;gpu&#x2F;* &amp;&amp; \
+    rm -rf .&#x2F;*&#x2F;kernel&#x2F;drivers&#x2F;infiniband&#x2F;* &amp;&amp; \
+    rm -rf .&#x2F;*&#x2F;kernel&#x2F;drivers&#x2F;isdn&#x2F;* &amp;&amp; \
+    rm -rf .&#x2F;*&#x2F;kernel&#x2F;drivers&#x2F;media&#x2F;* &amp;&amp; \
+    rm -rf .&#x2F;*&#x2F;kernel&#x2F;drivers&#x2F;staging&#x2F;lustre&#x2F;* &amp;&amp; \
+    rm -rf .&#x2F;*&#x2F;kernel&#x2F;drivers&#x2F;staging&#x2F;comedi&#x2F;* &amp;&amp; \
+    rm -rf .&#x2F;*&#x2F;kernel&#x2F;fs&#x2F;ocfs2&#x2F;* &amp;&amp; \
+    rm -rf .&#x2F;*&#x2F;kernel&#x2F;net&#x2F;bluetooth&#x2F;* &amp;&amp; \
+    rm -rf .&#x2F;*&#x2F;kernel&#x2F;net&#x2F;mac80211&#x2F;* &amp;&amp; \
+    rm -rf .&#x2F;*&#x2F;kernel&#x2F;net&#x2F;wireless&#x2F;*
+
+# Install libcap
+RUN curl -L ftp:&#x2F;&#x2F;ftp.de.debian.org&#x2F;debian&#x2F;pool&#x2F;main&#x2F;libc&#x2F;libcap2&#x2F;libcap2_2.22.orig.tar.gz | tar -C &#x2F; -xz &amp;&amp; \
+    cd &#x2F;libcap-2.22 &amp;&amp; \
+    sed -i &#39;s&#x2F;LIBATTR :&#x3D; yes&#x2F;LIBATTR :&#x3D; no&#x2F;&#39; Make.Rules &amp;&amp; \
+    sed -i &#39;s&#x2F;\(^CFLAGS :&#x3D; .*\)&#x2F;\1 -m32&#x2F;&#39; Make.Rules &amp;&amp; \
+    make &amp;&amp; \
+    mkdir -p output &amp;&amp; \
+    make prefix&#x3D;&#96;pwd&#96;&#x2F;output install &amp;&amp; \
+    mkdir -p $ROOTFS&#x2F;usr&#x2F;local&#x2F;lib &amp;&amp; \
+    cp -av &#96;pwd&#96;&#x2F;output&#x2F;lib64&#x2F;* $ROOTFS&#x2F;usr&#x2F;local&#x2F;lib
+
+# Make sure the kernel headers are installed for aufs-util, and then build it
+RUN cd &#x2F;linux-kernel &amp;&amp; \
+    make INSTALL_HDR_PATH&#x3D;&#x2F;tmp&#x2F;kheaders headers_install &amp;&amp; \
+    cd &#x2F; &amp;&amp; \
+    git clone git:&#x2F;&#x2F;git.code.sf.net&#x2F;p&#x2F;aufs&#x2F;aufs-util &amp;&amp; \
+    cd &#x2F;aufs-util &amp;&amp; \
+    git checkout aufs3.9 &amp;&amp; \
+    CPPFLAGS&#x3D;&quot;-m32 -I&#x2F;tmp&#x2F;kheaders&#x2F;include&quot; CLFAGS&#x3D;$CPPFLAGS LDFLAGS&#x3D;$CPPFLAGS make &amp;&amp; \
+    DESTDIR&#x3D;$ROOTFS make install &amp;&amp; \
+    rm -rf &#x2F;tmp&#x2F;kheaders
+
+# Download the rootfs, don&#39;t unpack it though:
+RUN curl -L -o &#x2F;tcl_rootfs.gz $TCL_REPO_BASE&#x2F;release&#x2F;distribution_files&#x2F;rootfs.gz
+
+# Install the TCZ dependencies
+RUN for dep in $TCZ_DEPS; do \
+    echo &quot;Download $TCL_REPO_BASE&#x2F;tcz&#x2F;$dep.tcz&quot; &amp;&amp;\
+        curl -L -o &#x2F;tmp&#x2F;$dep.tcz $TCL_REPO_BASE&#x2F;tcz&#x2F;$dep.tcz &amp;&amp; \
+        unsquashfs -f -d $ROOTFS &#x2F;tmp&#x2F;$dep.tcz &amp;&amp; \
+        rm -f &#x2F;tmp&#x2F;$dep.tcz ;\
+    done
+
+COPY VERSION $ROOTFS&#x2F;etc&#x2F;version
+
+# Get the Docker version that matches our boot2docker version
+# Note: &#96;docker version&#96; returns non-true when there is no server to ask
+RUN curl -L -o $ROOTFS&#x2F;usr&#x2F;local&#x2F;bin&#x2F;docker https:&#x2F;&#x2F;get.docker.io&#x2F;builds&#x2F;Linux&#x2F;x86_64&#x2F;docker-$(cat $ROOTFS&#x2F;etc&#x2F;version) &amp;&amp; \
+    chmod +x $ROOTFS&#x2F;usr&#x2F;local&#x2F;bin&#x2F;docker &amp;&amp; \
+    &#123; $ROOTFS&#x2F;usr&#x2F;local&#x2F;bin&#x2F;docker version || true; &#125;
+
+# get generate_cert
+RUN curl -L -o $ROOTFS&#x2F;usr&#x2F;local&#x2F;bin&#x2F;generate_cert https:&#x2F;&#x2F;github.com&#x2F;SvenDowideit&#x2F;generate_cert&#x2F;releases&#x2F;download&#x2F;0.1&#x2F;generate_cert-0.1-linux-386&#x2F; &amp;&amp; \
+    chmod +x $ROOTFS&#x2F;usr&#x2F;local&#x2F;bin&#x2F;generate_cert
+
+# Get the git versioning info
+COPY .git &#x2F;git&#x2F;.git
+RUN cd &#x2F;git &amp;&amp; \
+    GIT_BRANCH&#x3D;$(git rev-parse --abbrev-ref HEAD) &amp;&amp; \
+    GITSHA1&#x3D;$(git rev-parse --short HEAD) &amp;&amp; \
+    DATE&#x3D;$(date) &amp;&amp; \
+    echo &quot;$&#123;GIT_BRANCH&#125; : $&#123;GITSHA1&#125; - $&#123;DATE&#125;&quot; &gt; $ROOTFS&#x2F;etc&#x2F;boot2docker
+
+COPY rootfs&#x2F;isolinux &#x2F;isolinux
+
+# Copy our custom rootfs
+COPY rootfs&#x2F;rootfs $ROOTFS
+
+# These steps can only be run once, so can&#39;t be in make_iso.sh (which can be run in chained Dockerfiles)
+# see https:&#x2F;&#x2F;github.com&#x2F;boot2docker&#x2F;boot2docker&#x2F;blob&#x2F;master&#x2F;doc&#x2F;BUILD.md
+RUN    \
+# Make sure init scripts are executable &amp;&amp; \
+	find $ROOTFS&#x2F;etc&#x2F;rc.d&#x2F; $ROOTFS&#x2F;usr&#x2F;local&#x2F;etc&#x2F;init.d&#x2F; -exec chmod +x &#39;&#123;&#125;&#39; &#39;;&#39; &amp;&amp; \
+# Download Tiny Core Linux rootfs  &amp;&amp; \
+	( cd $ROOTFS &amp;&amp; zcat &#x2F;tcl_rootfs.gz | cpio -f -i -H newc -d --no-absolute-filenames ) &amp;&amp; \
+# Change MOTD &amp;&amp; \
+	mv $ROOTFS&#x2F;usr&#x2F;local&#x2F;etc&#x2F;motd $ROOTFS&#x2F;etc&#x2F;motd &amp;&amp; \
+# Make sure we have the correct bootsync &amp;&amp; \
+	mv $ROOTFS&#x2F;boot*.sh $ROOTFS&#x2F;opt&#x2F; &amp;&amp; \
+	chmod +x $ROOTFS&#x2F;opt&#x2F;*.sh &amp;&amp; \
+# Make sure we have the correct shutdown &amp;&amp; \
+	mv $ROOTFS&#x2F;shutdown.sh $ROOTFS&#x2F;opt&#x2F;shutdown.sh &amp;&amp; \
+	chmod +x $ROOTFS&#x2F;opt&#x2F;shutdown.sh &amp;&amp; \
+# Add serial console &amp;&amp; \
+	echo &quot;#!&#x2F;bin&#x2F;sh&quot; &gt; $ROOTFS&#x2F;usr&#x2F;local&#x2F;bin&#x2F;autologin &amp;&amp; \
+	echo &quot;&#x2F;bin&#x2F;login -f docker&quot; &gt;&gt; $ROOTFS&#x2F;usr&#x2F;local&#x2F;bin&#x2F;autologin &amp;&amp; \
+	chmod 755 $ROOTFS&#x2F;usr&#x2F;local&#x2F;bin&#x2F;autologin &amp;&amp; \
+	echo &#39;ttyS0:2345:respawn:&#x2F;sbin&#x2F;getty -l &#x2F;usr&#x2F;local&#x2F;bin&#x2F;autologin 9600 ttyS0 vt100&#39; &gt;&gt; $ROOTFS&#x2F;etc&#x2F;inittab &amp;&amp; \
+# fix su - &amp;&amp; \
+	echo root &gt; $ROOTFS&#x2F;etc&#x2F;sysconfig&#x2F;superuser
+
+
+COPY rootfs&#x2F;make_iso.sh &#x2F;
+RUN &#x2F;make_iso.sh
+CMD [&quot;cat&quot;, &quot;boot2docker.iso&quot;]</code></pre>
+
+<ol>
+<li><p>FROM指令和MAINTAINER指令</p>
+<p>脚本的第1行是<code>FROM</code>指令。通过<code>FROM</code>指令，<code>docker</code>编译程序能够知道在哪个基础镜像执行来进行编译。所有的Dockerfile都必须以<code>FROM</code>指令开始。第二条指令<code>MAINTAINER</code>，用来标明这个镜像的维护者信息。</p>
+</li>
+<li><p>RUN指令</p>
+<p>接下来是<code>RUN</code>指令。这条指令用来在<code>docker</code>的编译环境中运行指定命令。上面这条指令会在编译环境运行<code>/bin/sh -c &quot;apt-get update &amp;&amp; apt-get -y install ...&quot;</code>。<code>RUN</code>指令还有另外一种格式：</p>
+<pre class="language-none"><code class="language-none">RUN [&quot;程序名&quot;, &quot;参数1&quot;, &quot;参数2&quot;]</code></pre>
+
+<p>这种格式运行程序，可以免除运行<code>/bin/sh</code>的消耗。这种格式使用Json格式将程序名与所需参数组成一个字符串数组，所以如果参数中有引号等特殊字符，需要进行转义。</p>
+</li>
+<li><p>ENV指令</p>
+<p><code>ENV</code>指令用来指定在执行<code>docker run</code>命令运行镜像时，自动设置的环境变量。这些环境变量可以通过<code>docker run</code>命令的<code>--evn</code>参数来进行修改。</p>
+</li>
+<li><p>COPY指令和ADD指令</p>
+<p><code>COPY</code>指令用来将本地（Dockerfile所在位置）的文件或文件夹复制到编译环境的指定路径下。上面的例子里，boot2docker的Dockerfile希望将与Dockerfile同一目录下的<code>kernel_config</code>文件复制到编译环境的<code>/linux-kernal/.config</code>。Dockerfile还提供了另外一个类似的指令：<code>ADD</code>。在复制文件方面<code>ADD</code>指令和<code>COPY</code>指令的格式和效果是完全一样的。这两个指令的区别主要由两点：</p>
+<ol>
+<li><code>ADD</code>指令可以从一个URL地址下载内容复制到容器的文件系统中;</li>
+<li><code>ADD</code>指令会将压缩打包格式的文件解开后复制到指定位置，而<code>COPY</code>指令只做复制操作。</li>
+</ol>
+</li>
+<li><p>CMD指令</p>
+<p>这是整个Dockerfile脚本的最后一条指令。当Dockerfile已经完成了所有环境的安装与配置，通过<code>CMD</code>指令来指示<code>docker run</code>命令运行镜像时要执行的命令。上面的例子里，在完成所有工作后，boot2docker的编译脚本将编译结果输出到本地环境下。</p>
+</li>
+<li><p>其他指令</p>
+<p>上面我们通过boot2docker的Dockerfile脚本学习了几个最常用的指令。接下来我们再学习剩下的几个指令。</p>
+<h3 id="EXPOSE指令"><a href="#EXPOSE指令" class="headerlink" title="EXPOSE指令"></a><code>EXPOSE</code>指令</h3><p><code>EXPOSE &lt;端口&gt; [&lt;端口&gt;...]</code>指令用于标明，这个镜像中的应用将会侦听某个端口，并且希望能将这个端口映射到主机的网络界面上。但是，为了安全，<code>docker run</code>命令如果没有带上响应的端口映射参数，<code>docker</code>并不会将端口映射出了。</p>
+<h3 id="ENTRYPOINT指令"><a href="#ENTRYPOINT指令" class="headerlink" title="ENTRYPOINT指令"></a><code>ENTRYPOINT</code>指令</h3><p><code>ENTRYPOINT</code>指令和前面介绍过的<code>CMD</code>一样，用于标明一个镜像作为容器运行时，最后要执行的程序或命令。这两个指令有相同之处，也有区别。通过两个指令的配合使用可以配置出不同的效果。</p>
+<p><code>ENTRYPOINT</code>指令有两种格式，<code>CMD</code>指令有三种格式：</p>
+<pre class="language-none"><code class="language-none">ENTRYPOINT [&quot;程序名&quot;, &quot;参数1&quot;, &quot;参数2&quot;]
+ENTRYPOINT 命令 参数1 参数2
+
+CMD [&quot;程序名&quot;, &quot;参数1&quot;, &quot;参数2&quot;]
+CMD 命令 参数1 参数2
+CMD 参数1 参数2</code></pre>
+
+<p><code>ENTRYPOINT</code>是容器运行程序的入口。也就是说，在<code>docker run</code>命令中指定的命令都将作为参数提供给<code>ENTRYPOINT</code>指定的程序。同样，上面列举的<code>CMD</code>指令格式的后面两种格式也将作为参数提供给<code>ENTRYPOINT</code>指定的程序。</p>
+<p>默认的<code>ENTRYPOINT</code>是<code>/bin/sh -c</code>。你可以根据实际需要任意设置。但是如果在一个Dockerfile中出现了多个<code>ENTRYPOINT</code>指令，那么，只有最后一个<code>ENTRYPOINT</code>指令是起效的。</p>
+<p>一种常用的设置是将命令与必要参数设置到<code>ENTRYPOINT</code>中，而运行时只提供其他选项。例如：你有一个MySQL的客户端程序运行在容器中，而客户端所需要的主机地址、用户名和密码你不希望每次都输入，你就可以将<code>ENTRYPOINT</code>设置成：<code>ENTRYPOINT mysql -u &lt;用户名&gt; -p &lt;密码&gt; -h &lt;主机名&gt;</code>。而你运行时，只需要指定数据库名。</p>
+<h3 id="VOLUME指令"><a href="#VOLUME指令" class="headerlink" title="VOLUME指令"></a><code>VOLUME</code>指令</h3><pre class="language-none"><code class="language-none">VOLUME [&quot;路径&quot;]</code></pre>
+
+<p><code>VOLUME</code>指令用于在容器内创建一个或多个卷。而更多的时候，是在执行<code>docker run</code>时指定要创建的卷以及本地路径来进行映射。关于这个用法将在后面的章节学习到。</p>
+<h3 id="USER指令"><a href="#USER指令" class="headerlink" title="USER指令"></a><code>USER</code>指令</h3><pre class="language-none"><code class="language-none">USER 用户名或用户ID</code></pre>
+
+<p><code>USER</code>指令用于容器内运行<code>RUN</code>指令或<code>CMD</code>指令的用户。例如，在构建一个nginx镜像时，你希望最后运行nginx的用户为nginx，就可以在<code>CMD [&quot;nginx&quot;]</code>之前将用户设置为<code>nginx</code>。</p>
+<p>如果在运行<code>docker run</code>命令时设置了<code>-u 用户名</code>参数，那么将覆盖<code>USER</code>指令设置的用户。</p>
+<h3 id="WORKDIR指令"><a href="#WORKDIR指令" class="headerlink" title="WORKDIR指令"></a><code>WORKDIR</code>指令</h3><pre class="language-none"><code class="language-none">WORKDIR 路径</code></pre>
+
+<p><code>WORKDIR</code>指令用于设置执行<code>RUN</code>指令、<code>CMD</code>指令和<code>ENTRYPOINT</code>指令执行时的工作目录。在Dockerfile中可以多次设置<code>WORKDIR</code>，在每次设置之后的命令将使用新的路径。</p>
+<h3 id="ONBUILD指令"><a href="#ONBUILD指令" class="headerlink" title="ONBUILD指令"></a><code>ONBUILD</code>指令</h3><pre class="language-none"><code class="language-none">ONBUILD 指令</code></pre>
+
+<p><code>ONBUILD</code>指令用于设置一些指令，当本镜像作为基础镜像被其他Dockerfile用<code>FROM</code>指令引用时，在所有其他指令执行之前先执行这些指令。</p>
+</li>
+</ol>
+<h1 id="Compose"><a href="#Compose" class="headerlink" title="Compose"></a>Compose</h1><h2 id="基本命令"><a href="#基本命令" class="headerlink" title="基本命令"></a>基本命令</h2><pre class="language-bash" data-language="bash"><code class="language-bash"><span class="token comment"># 批量启动</span>
+docker-compose up -d <span class="token comment"># 改名了实现了构建镜像、(重新)创建服务、启动服务，并关联服务相关的容器操作</span>
+
+<span class="token comment"># 启动</span>
+docker-compose start <span class="token comment"># -f指定配置文件</span>
+
+<span class="token comment"># 停止</span>
+docker-compose stop</code></pre>
+
+<h2 id="docker-compose-yaml"><a href="#docker-compose-yaml" class="headerlink" title="docker-compose.yaml"></a>docker-compose.yaml</h2><h3 id="参考-1"><a href="#参考-1" class="headerlink" title="参考"></a>参考</h3><pre class="language-yaml" data-language="yaml"><code class="language-yaml"><span class="token key atrule">version</span><span class="token punctuation">:</span> <span class="token string">'2'</span>
+<span class="token key atrule">services</span><span class="token punctuation">:</span>
+  <span class="token key atrule">web</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> dockercloud/hello<span class="token punctuation">-</span>world
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token number">8080</span>
+    <span class="token key atrule">networks</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> front<span class="token punctuation">-</span>tier
+      <span class="token punctuation">-</span> back<span class="token punctuation">-</span>tier
+
+  <span class="token key atrule">redis</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> redis
+    <span class="token key atrule">links</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> web
+    <span class="token key atrule">networks</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> back<span class="token punctuation">-</span>tier
+
+  <span class="token key atrule">lb</span><span class="token punctuation">:</span>
+    <span class="token key atrule">image</span><span class="token punctuation">:</span> dockercloud/haproxy
+    <span class="token key atrule">ports</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> <span class="token datetime number">80:80</span>
+    <span class="token key atrule">links</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> web
+    <span class="token key atrule">networks</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> front<span class="token punctuation">-</span>tier
+      <span class="token punctuation">-</span> back<span class="token punctuation">-</span>tier
+    <span class="token key atrule">volumes</span><span class="token punctuation">:</span>
+      <span class="token punctuation">-</span> /var/run/docker.sock<span class="token punctuation">:</span>/var/run/docker.sock 
+
+<span class="token key atrule">networks</span><span class="token punctuation">:</span>
+  <span class="token key atrule">front-tier</span><span class="token punctuation">:</span>
+    <span class="token key atrule">driver</span><span class="token punctuation">:</span> bridge
+  <span class="token key atrule">back-tier</span><span class="token punctuation">:</span>
+<span class="token key atrule">driver</span><span class="token punctuation">:</span> bridge</code></pre>
+
+<h3 id="version"><a href="#version" class="headerlink" title="version"></a>version</h3><p>version是compose的版本，下表是compose版本与docker版本对照表：</p>
+<h3 id="services"><a href="#services" class="headerlink" title="services"></a>services</h3><p>services是用来配置定义每个容器启动参数，每个service就是一个容器，services下一级配置即是服务名称，例如上面示例中的redis, db等。</p>
+<h3 id="image"><a href="#image" class="headerlink" title="image"></a>image</h3><p>image是指定服务的镜像名称或镜像 ID。如果镜像在本地不存在，Compose 将会尝试拉取这个镜像。</p>
+<h3 id="build"><a href="#build" class="headerlink" title="build"></a>build</h3><p>服务除了可以基于指定的镜像，还可以基于一份 Dockerfile，在使用 up 启动之时执行构建任务，这个构建标签就是 build，它可以指定 Dockerfile 所在文件夹的路径。Compose 将会利用它自动构建这个镜像，然后使用这个镜像启动服务容器。</p>
+<pre class="language-none"><code class="language-none">build: &#x2F;path&#x2F;to&#x2F;build&#x2F;dir</code></pre>
+
+<p>也可以是相对路径，只要上下文确定就可以读取到 Dockerfile。</p>
+<pre class="language-none"><code class="language-none">build: .&#x2F;dir</code></pre>
+
+<p>设定上下文根目录，然后以该目录为准指定 Dockerfile。</p>
+<pre class="language-none"><code class="language-none">build:
+  context: ..&#x2F;
+  dockerfile: path&#x2F;of&#x2F;Dockerfile</code></pre>
+
+<blockquote>
+<p>注意 build 都是一个目录，如果你要指定 Dockerfile 文件需要在 build 标签的子级标签中使用 dockerfile 标签指定，如上面的例子。<br> 如果你同时指定了 image 和 build 两个标签，那么 Compose 会构建镜像并且把镜像命名为 image 后面的那个名字。</p>
+</blockquote>
+<p>既然可以在 docker-compose.yml 中定义构建任务，那么一定少不了 arg 这个标签，就像 Dockerfile 中的 ARG 指令，它可以在构建过程中指定环境变量，但是在构建成功后取消，在 docker-compose.yml 文件中也支持这样的写法：</p>
+<pre class="language-none"><code class="language-none">build:
+  context: .
+  args:
+    buildno: 1
+    password: secret</code></pre>
+
+<p>下面这种写法也是支持的，一般来说下面的写法更适合阅读。</p>
+<pre class="language-none"><code class="language-none">build:
+  context: .
+  args:
+    - buildno&#x3D;1
+    - password&#x3D;secret</code></pre>
+
+<p>与 ENV 不同的是，ARG 是允许空值的。例如：</p>
+<pre class="language-none"><code class="language-none">args:
+  - buildno
+  - password</code></pre>
+
+<p>这样构建过程可以向它们赋值。</p>
+<blockquote>
+<p>注意：YAML 的布尔值（true, false, yes, no, on, off）必须要使用引号引起来（单引号、双引号均可），否则会当成字符串解析。</p>
+</blockquote>
+<h3 id="command"><a href="#command" class="headerlink" title="command"></a>command</h3><p>使用 command 可以覆盖容器启动后默认执行的命令。</p>
+<pre class="language-none"><code class="language-none">command: bundle exec thin -p 3000</code></pre>
+
+<p>也可以写成类似 Dockerfile 中的格式：</p>
+<pre class="language-none"><code class="language-none">command: [bundle, exec, thin, -p, 3000]</code></pre>
+
+<h3 id="container-name"><a href="#container-name" class="headerlink" title="container_name"></a>container_name</h3><p>Compose 的容器名称格式是：&lt;项目名称&gt;&lt;服务名称&gt;&lt;序号&gt;<br>虽然可以自定义项目名称、服务名称，但是如果你想完全控制容器的命名，可以使用这个标签指定：</p>
+<pre class="language-none"><code class="language-none">container_name: app</code></pre>
+
+<p>这样容器的名字就指定为 app 了。</p>
+<h3 id="depends-on"><a href="#depends-on" class="headerlink" title="depends_on"></a>depends_on</h3><p>在使用 Compose 时，最大的好处就是少打启动命令，但是一般项目容器启动的顺序是有要求的，如果直接从上到下启动容器，必然会因为容器依赖问题而启动失败。<br> 例如在没启动数据库容器的时候启动了应用容器，这时候应用容器会因为找不到数据库而退出，为了避免这种情况我们需要加入一个标签，就是 depends_on，这个标签解决了容器的依赖、启动先后的问题。<br> 例如下面容器会先启动 redis 和 db 两个服务，最后才启动 web 服务：</p>
+<pre class="language-none"><code class="language-none">version: &#39;2&#39;
+services:
+  web:
+    build: .
+    depends_on:
+      - db
+      - redis
+  redis:
+    image: redis
+  db:
+    image: postgres</code></pre>
+
+<p>注意的是，默认情况下使用 docker-compose up web 这样的方式启动 web 服务时，也会启动 redis 和 db 两个服务，因为在配置文件中定义了依赖关系。</p>
+<h3 id="dns"><a href="#dns" class="headerlink" title="dns"></a>dns</h3><p>和 –dns 参数一样用途，格式如下：</p>
+<pre class="language-none"><code class="language-none">dns: 8.8.8.8</code></pre>
+
+<p>也可以是一个列表：</p>
+<pre class="language-none"><code class="language-none">dns:
+  - 8.8.8.8
+  - 9.9.9.9</code></pre>
+
+<p>此外 dns_search 的配置也类似：</p>
+<pre class="language-none"><code class="language-none">dns_search: example.com
+dns_search:
+  - dc1.example.com
+  - dc2.example.com</code></pre>
+
+<h3 id="environment"><a href="#environment" class="headerlink" title="environment"></a>environment</h3><p>和 arg 有几分类似，这个标签的作用是设置镜像变量，它可以保存变量到镜像里面，也就是说启动的容器也会包含这些变量设置，这是与 arg 最大的不同。<br> 一般 arg 标签的变量仅用在构建过程中。而 environment 和 Dockerfile 中的 ENV 指令一样会把变量一直保存在镜像、容器中，类似 docker run -e 的效果。</p>
+<pre class="language-none"><code class="language-none">environment:
+  RACK_ENV: development
+  SHOW: &#39;true&#39;
+  SESSION_SECRET:
+ 
+environment:
+  - RACK_ENV&#x3D;development
+  - SHOW&#x3D;true
+  - SESSION_SECRET</code></pre>
+
+<h3 id="extra-hosts"><a href="#extra-hosts" class="headerlink" title="extra_hosts"></a>extra_hosts</h3><p>添加主机名的标签，就是往/etc/hosts文件中添加一些记录，与Docker client的–add-host类似：</p>
+<pre class="language-none"><code class="language-none">extra_hosts:
+ - &quot;somehost:162.242.195.82&quot;
+ - &quot;otherhost:50.31.209.229&quot;</code></pre>
+
+<p>启动之后查看容器内部hosts：</p>
+<pre class="language-none"><code class="language-none">162.242.195.82  somehost
+50.31.209.229   otherhost</code></pre>
+
+<h3 id="labels"><a href="#labels" class="headerlink" title="labels"></a>labels</h3><p>向容器添加元数据，和Dockerfile的LABEL指令一个意思，格式如下：</p>
+<pre class="language-none"><code class="language-none">labels:
+  com.example.description: &quot;Accounting webapp&quot;
+  com.example.department: &quot;Finance&quot;
+  com.example.label-with-empty-value: &quot;&quot;
+labels:
+  - &quot;com.example.description&#x3D;Accounting webapp&quot;
+  - &quot;com.example.department&#x3D;Finance&quot;
+  - &quot;com.example.label-with-empty-value&quot;</code></pre>
+
+<p>映射端口的标签。<br> 使用HOST:CONTAINER格式或者只是指定容器的端口，宿主机会随机映射端口。</p>
+<pre class="language-none"><code class="language-none">ports:
+ - &quot;3000&quot;
+ - &quot;8000:8000&quot;
+ - &quot;49100:22&quot;
+ - &quot;127.0.0.1:8001:8001&quot;</code></pre>
+
+<blockquote>
+<p>注意：当使用HOST:CONTAINER格式来映射端口时，如果你使用的容器端口小于60你可能会得到错误得结果，因为YAML将会解析xx:yy这种数字格式为60进制。所以建议采用字符串格式。</p>
+</blockquote>
+<h3 id="volumes"><a href="#volumes" class="headerlink" title="volumes"></a>volumes</h3><p>挂载一个目录或者一个已存在的数据卷容器，可以直接使用 [HOST:CONTAINER] 这样的格式，或者使用 [HOST:CONTAINER:ro] 这样的格式，后者对于容器来说，数据卷是只读的，这样可以有效保护宿主机的文件系统。<br> Compose的数据卷指定路径可以是相对路径，使用 . 或者 .. 来指定相对目录。<br> 数据卷的格式可以是下面多种形式：</p>
+<pre class="language-none"><code class="language-none">volumes:
+  &#x2F;&#x2F; 只是指定一个路径，Docker 会自动在创建一个数据卷（这个路径是容器内部的）。
+  - &#x2F;var&#x2F;lib&#x2F;mysql
+ 
+  &#x2F;&#x2F; 使用绝对路径挂载数据卷
+  - &#x2F;opt&#x2F;data:&#x2F;var&#x2F;lib&#x2F;mysql
+ 
+  &#x2F;&#x2F; 以 Compose 配置文件为中心的相对路径作为数据卷挂载到容器。
+  - .&#x2F;cache:&#x2F;tmp&#x2F;cache
+ 
+  &#x2F;&#x2F; 使用用户的相对路径（~&#x2F; 表示的目录是 &#x2F;home&#x2F;&lt;用户目录&gt;&#x2F; 或者 &#x2F;root&#x2F;）。
+  - ~&#x2F;configs:&#x2F;etc&#x2F;configs&#x2F;:ro
+ 
+  &#x2F;&#x2F; 已经存在的命名的数据卷。
+  - datavolume:&#x2F;var&#x2F;lib&#x2F;mysql</code></pre>
+
+<p>如果你不使用宿主机的路径，你可以指定一个volume_driver。</p>
+<pre class="language-none"><code class="language-none">volume_driver: mydriver</code></pre>
+
+<h3 id="networks"><a href="#networks" class="headerlink" title="networks"></a>networks</h3><p>加入指定网络，格式如下：</p>
+<pre class="language-none"><code class="language-none">services:
+  some-service:
+    networks:
+     - some-network
+     - other-network</code></pre>
+
+<p>关于这个标签还有一个特别的子标签aliases，这是一个用来设置服务别名的标签，例如：</p>
+<pre class="language-none"><code class="language-none">services:
+  some-service:
+    networks:
+      some-network:
+        aliases:
+         - alias1
+         - alias3
+      other-network:
+        aliases:
+         - alias2</code></pre>
+
+<p>相同的服务可以在不同的网络有不同的别名。</p>
+<h3 id="network-mode"><a href="#network-mode" class="headerlink" title="network_mode"></a>network_mode</h3><p>网络模式，与Docker client的–net参数类似，只是相对多了一个service:[service name] 的格式。<br> 例如：</p>
+<pre class="language-none"><code class="language-none">network_mode: &quot;bridge&quot;
+network_mode: &quot;host&quot;
+network_mode: &quot;none&quot;
+network_mode: &quot;service:[service name]&quot;
+network_mode: &quot;container:[container name&#x2F;id]&quot;</code></pre>
+
+<h1 id="参考-2"><a href="#参考-2" class="headerlink" title="参考"></a>参考</h1><p><a target="_blank" rel="noopener" href="https://juejin.im/post/5b319c3cf265da597d0aa79d">https://juejin.im/post/5b319c3cf265da597d0aa79d</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/zhangpeihao/LearningDocker/blob/master/manuscript/04-WriteDockerfile.md">https://github.com/zhangpeihao/LearningDocker/blob/master/manuscript/04-WriteDockerfile.md</a></p>
+<p><a target="_blank" rel="noopener" href="https://www.jianshu.com/p/4f14637f4b35">https://www.jianshu.com/p/4f14637f4b35</a></p>
+<p><a target="_blank" rel="noopener" href="http://dockone.io/article/128">http://dockone.io/article/128</a></p>
+
+                
+            </div>
+            <hr/>
+
+            
+
+    <div class="reprint" id="reprint-statement">
+        
+            <div class="reprint__author">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-user">
+                        文章作者:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="/about" rel="external nofollow noreferrer">wumu</a>
+                </span>
+            </div>
+            <div class="reprint__type">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-link">
+                        文章链接:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    <a href="http://wumuwumu.github.io/2019/08/03/docker/docker%E6%95%99%E7%A8%8B/">http://wumuwumu.github.io/2019/08/03/docker/docker%E6%95%99%E7%A8%8B/</a>
+                </span>
+            </div>
+            <div class="reprint__notice">
+                <span class="reprint-meta" style="font-weight: bold;">
+                    <i class="fas fa-copyright">
+                        版权声明:
+                    </i>
+                </span>
+                <span class="reprint-info">
+                    本博客所有文章除特別声明外，均采用
+                    <a href="https://creativecommons.org/licenses/by/4.0/deed.zh" rel="external nofollow noreferrer" target="_blank">CC BY 4.0</a>
+                    许可协议。转载请注明来源
+                    <a href="/about" target="_blank">wumu</a>
+                    !
+                </span>
+            </div>
+        
+    </div>
+
+    <script async defer>
+      document.addEventListener("copy", function (e) {
+        let toastHTML = '<span>复制成功，请遵循本文的转载规则</span><button class="btn-flat toast-action" onclick="navToReprintStatement()" style="font-size: smaller">查看</a>';
+        M.toast({html: toastHTML})
+      });
+
+      function navToReprintStatement() {
+        $("html, body").animate({scrollTop: $("#reprint-statement").offset().top - 80}, 800);
+      }
+    </script>
+
+
+
+            <div class="tag_share" style="display: block;">
+                <div class="post-meta__tag-list" style="display: inline-block;">
+                    
+                        <div class="article-tag">
+                            
+                                <a href="/tags/docker/">
+                                    <span class="chip bg-color">docker</span>
+                                </a>
+                            
+                        </div>
+                    
+                </div>
+                <div class="post_share" style="zoom: 80%; width: fit-content; display: inline-block; float: right; margin: -0.15rem 0;">
+                    <link rel="stylesheet" type="text/css" href="/libs/share/css/share.min.css">
+<div id="article-share">
+
+    
+    <div class="social-share" data-sites="twitter,facebook,google,qq,qzone,wechat,weibo,douban,linkedin" data-wechat-qrcode-helper="<p>微信扫一扫即可分享！</p>"></div>
+    <script src="/libs/share/js/social-share.min.js"></script>
+    
+
+    
+
+</div>
+
+                </div>
+            </div>
+            
+                <style>
+    #reward {
+        margin: 40px 0;
+        text-align: center;
+    }
+
+    #reward .reward-link {
+        font-size: 1.4rem;
+        line-height: 38px;
+    }
+
+    #reward .btn-floating:hover {
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.2), 0 5px 15px rgba(0, 0, 0, 0.2);
+    }
+
+    #rewardModal {
+        width: 320px;
+        height: 350px;
+    }
+
+    #rewardModal .reward-title {
+        margin: 15px auto;
+        padding-bottom: 5px;
+    }
+
+    #rewardModal .modal-content {
+        padding: 10px;
+    }
+
+    #rewardModal .close {
+        position: absolute;
+        right: 15px;
+        top: 15px;
+        color: rgba(0, 0, 0, 0.5);
+        font-size: 1.3rem;
+        line-height: 20px;
+        cursor: pointer;
+    }
+
+    #rewardModal .close:hover {
+        color: #ef5350;
+        transform: scale(1.3);
+        -moz-transform:scale(1.3);
+        -webkit-transform:scale(1.3);
+        -o-transform:scale(1.3);
+    }
+
+    #rewardModal .reward-tabs {
+        margin: 0 auto;
+        width: 210px;
+    }
+
+    .reward-tabs .tabs {
+        height: 38px;
+        margin: 10px auto;
+        padding-left: 0;
+    }
+
+    .reward-content ul {
+        padding-left: 0 !important;
+    }
+
+    .reward-tabs .tabs .tab {
+        height: 38px;
+        line-height: 38px;
+    }
+
+    .reward-tabs .tab a {
+        color: #fff;
+        background-color: #ccc;
+    }
+
+    .reward-tabs .tab a:hover {
+        background-color: #ccc;
+        color: #fff;
+    }
+
+    .reward-tabs .wechat-tab .active {
+        color: #fff !important;
+        background-color: #22AB38 !important;
+    }
+
+    .reward-tabs .alipay-tab .active {
+        color: #fff !important;
+        background-color: #019FE8 !important;
+    }
+
+    .reward-tabs .reward-img {
+        width: 210px;
+        height: 210px;
+    }
+</style>
+
+<div id="reward">
+    <a href="#rewardModal" class="reward-link modal-trigger btn-floating btn-medium waves-effect waves-light red">赏</a>
+
+    <!-- Modal Structure -->
+    <div id="rewardModal" class="modal">
+        <div class="modal-content">
+            <a class="close modal-close"><i class="fas fa-times"></i></a>
+            <h4 class="reward-title">你的赏识是我前进的动力</h4>
+            <div class="reward-content">
+                <div class="reward-tabs">
+                    <ul class="tabs row">
+                        <li class="tab col s6 alipay-tab waves-effect waves-light"><a href="#alipay">支付宝</a></li>
+                        <li class="tab col s6 wechat-tab waves-effect waves-light"><a href="#wechat">微 信</a></li>
+                    </ul>
+                    <div id="alipay">
+                        <img src="/medias/reward/alipay.jpg" class="reward-img" alt="支付宝打赏二维码">
+                    </div>
+                    <div id="wechat">
+                        <img src="/medias/reward/wechat.png" class="reward-img" alt="微信打赏二维码">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('.tabs').tabs();
+    });
+</script>
+
+            
+        </div>
+    </div>
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+<article id="prenext-posts" class="prev-next articles">
+    <div class="row article-row">
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge left-badge text-color">
+                <i class="fas fa-chevron-left"></i>&nbsp;上一篇</div>
+            <div class="card">
+                <a href="/2019/08/03/java/spring%E4%BA%8B%E5%8A%A1%E5%AE%9E%E7%8E%B0/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/13.jpg" class="responsive-img" alt="spring事务实现">
+                        
+                        <span class="card-title">spring事务实现</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                        <span class="publish-date">
+                            <i class="far fa-clock fa-fw icon-date"></i>2019-08-03
+                        </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            wumu
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/java/">
+                        <span class="chip bg-color">java</span>
+                    </a>
+                    
+                    <a href="/tags/spring/">
+                        <span class="chip bg-color">spring</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+        
+        <div class="article col s12 m6" data-aos="fade-up">
+            <div class="article-badge right-badge text-color">
+                下一篇&nbsp;<i class="fas fa-chevron-right"></i>
+            </div>
+            <div class="card">
+                <a href="/2019/07/31/python/python-%E8%A3%85%E9%A5%B0%E5%99%A8/">
+                    <div class="card-image">
+                        
+                        
+                        <img src="/medias/featureimages/20.jpg" class="responsive-img" alt="python-装饰器">
+                        
+                        <span class="card-title">python-装饰器</span>
+                    </div>
+                </a>
+                <div class="card-content article-content">
+                    <div class="summary block-with-text">
+                        
+                            
+                        
+                    </div>
+                    <div class="publish-info">
+                            <span class="publish-date">
+                                <i class="far fa-clock fa-fw icon-date"></i>2019-07-31
+                            </span>
+                        <span class="publish-author">
+                            
+                            <i class="fas fa-user fa-fw"></i>
+                            wumu
+                            
+                        </span>
+                    </div>
+                </div>
+                
+                <div class="card-action article-tags">
+                    
+                    <a href="/tags/python/">
+                        <span class="chip bg-color">python</span>
+                    </a>
+                    
+                </div>
+                
+            </div>
+        </div>
+        
+    </div>
+</article>
+
+</div>
+
+
+
+<!-- 代码块功能依赖 -->
+<script type="text/javascript" src="/libs/codeBlock/codeBlockFuction.js"></script>
+
+<!-- 代码语言 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeLang.js"></script>
+
+
+<!-- 代码块复制 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeCopy.js"></script>
+
+
+<!-- 代码块收缩 -->
+
+<script type="text/javascript" src="/libs/codeBlock/codeShrink.js"></script>
+
+
+    </div>
+    <div id="toc-aside" class="expanded col l3 hide-on-med-and-down">
+        <div class="toc-widget card" style="background-color: white;">
+            <div class="toc-title"><i class="far fa-list-alt"></i>&nbsp;&nbsp;目录</div>
+            <div id="toc-content"></div>
+        </div>
+    </div>
+</div>
+
+<!-- TOC 悬浮按钮. -->
+
+<div id="floating-toc-btn" class="hide-on-med-and-down">
+    <a class="btn-floating btn-large bg-color">
+        <i class="fas fa-list-ul"></i>
+    </a>
+</div>
+
+
+<script src="/libs/tocbot/tocbot.min.js"></script>
+<script>
+    $(function () {
+        tocbot.init({
+            tocSelector: '#toc-content',
+            contentSelector: '#articleContent',
+            headingsOffset: -($(window).height() * 0.4 - 45),
+            collapseDepth: Number('0'),
+            headingSelector: 'h2, h3, h4'
+        });
+
+        // modify the toc link href to support Chinese.
+        let i = 0;
+        let tocHeading = 'toc-heading-';
+        $('#toc-content a').each(function () {
+            $(this).attr('href', '#' + tocHeading + (++i));
+        });
+
+        // modify the heading title id to support Chinese.
+        i = 0;
+        $('#articleContent').children('h2, h3, h4').each(function () {
+            $(this).attr('id', tocHeading + (++i));
+        });
+
+        // Set scroll toc fixed.
+        let tocHeight = parseInt($(window).height() * 0.4 - 64);
+        let $tocWidget = $('.toc-widget');
+        $(window).scroll(function () {
+            let scroll = $(window).scrollTop();
+            /* add post toc fixed. */
+            if (scroll > tocHeight) {
+                $tocWidget.addClass('toc-fixed');
+            } else {
+                $tocWidget.removeClass('toc-fixed');
+            }
+        });
+
+        
+        /* 修复文章卡片 div 的宽度. */
+        let fixPostCardWidth = function (srcId, targetId) {
+            let srcDiv = $('#' + srcId);
+            if (srcDiv.length === 0) {
+                return;
+            }
+
+            let w = srcDiv.width();
+            if (w >= 450) {
+                w = w + 21;
+            } else if (w >= 350 && w < 450) {
+                w = w + 18;
+            } else if (w >= 300 && w < 350) {
+                w = w + 16;
+            } else {
+                w = w + 14;
+            }
+            $('#' + targetId).width(w);
+        };
+
+        // 切换TOC目录展开收缩的相关操作.
+        const expandedClass = 'expanded';
+        let $tocAside = $('#toc-aside');
+        let $mainContent = $('#main-content');
+        $('#floating-toc-btn .btn-floating').click(function () {
+            if ($tocAside.hasClass(expandedClass)) {
+                $tocAside.removeClass(expandedClass).hide();
+                $mainContent.removeClass('l9');
+            } else {
+                $tocAside.addClass(expandedClass).show();
+                $mainContent.addClass('l9');
+            }
+            fixPostCardWidth('artDetail', 'prenext-posts');
+        });
+        
+    });
+</script>
+
+    
+
+</main>
+
+
+
+
+    <footer class="page-footer bg-color">
+    
+        <link rel="stylesheet" href="/libs/aplayer/APlayer.min.css">
+<style>
+    .aplayer .aplayer-lrc p {
+        
+        display: none;
+        
+        font-size: 12px;
+        font-weight: 700;
+        line-height: 16px !important;
+    }
+
+    .aplayer .aplayer-lrc p.aplayer-lrc-current {
+        
+        display: none;
+        
+        font-size: 15px;
+        color: #42b983;
+    }
+
+    
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body {
+        left: -66px !important;
+    }
+
+    .aplayer.aplayer-fixed.aplayer-narrow .aplayer-body:hover {
+        left: 0px !important;
+    }
+
+    
+</style>
+<div class="">
+    
+    <div class="row">
+        <meting-js class="col l8 offset-l2 m10 offset-m1 s12"
+                   server="netease"
+                   type="playlist"
+                   id="503838841"
+                   fixed='true'
+                   autoplay='false'
+                   theme='#42b983'
+                   loop='all'
+                   order='random'
+                   preload='auto'
+                   volume='0.7'
+                   list-folded='true'
+        >
+        </meting-js>
+    </div>
+</div>
+
+<script src="/libs/aplayer/APlayer.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/meting@2/dist/Meting.min.js"></script>
+
+    
+    <div class="container row center-align" style="margin-bottom: 0px !important;">
+        <div class="col s12 m8 l8 copy-right">
+            Copyright&nbsp;&copy;
+            
+                <span id="year">2019-2021</span>
+            
+            <span id="year">2019</span>
+            <a href="/about" target="_blank">wumu</a>
+            |&nbsp;Powered by&nbsp;<a href="https://hexo.io/" target="_blank">Hexo</a>
+            |&nbsp;Theme&nbsp;<a href="https://github.com/blinkfox/hexo-theme-matery" target="_blank">Matery</a>
+            <br>
+            
+            
+            
+            
+            
+            
+            <span id="busuanzi_container_site_pv">
+                |&nbsp;<i class="far fa-eye"></i>&nbsp;总访问量:&nbsp;<span id="busuanzi_value_site_pv"
+                    class="white-color"></span>&nbsp;次
+            </span>
+            
+            
+            <span id="busuanzi_container_site_uv">
+                |&nbsp;<i class="fas fa-users"></i>&nbsp;总访问人数:&nbsp;<span id="busuanzi_value_site_uv"
+                    class="white-color"></span>&nbsp;人
+            </span>
+            
+            <br>
+            
+            <br>
+            
+        </div>
+        <div class="col s12 m4 l4 social-link social-statis">
+    <a href="https://github.com/blinkfox" class="tooltipped" target="_blank" data-tooltip="访问我的GitHub" data-position="top" data-delay="50">
+        <i class="fab fa-github"></i>
+    </a>
+
+
+
+    <a href="mailto:1181062873@qq.com" class="tooltipped" target="_blank" data-tooltip="邮件联系我" data-position="top" data-delay="50">
+        <i class="fas fa-envelope-open"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="tencent://AddContact/?fromId=50&fromSubId=1&subcmd=all&uin=1181062873" class="tooltipped" target="_blank" data-tooltip="QQ联系我: 1181062873" data-position="top" data-delay="50">
+        <i class="fab fa-qq"></i>
+    </a>
+
+
+
+
+
+
+
+    <a href="/atom.xml" class="tooltipped" target="_blank" data-tooltip="RSS 订阅" data-position="top" data-delay="50">
+        <i class="fas fa-rss"></i>
+    </a>
+
+</div>
+    </div>
+</footer>
+
+<div class="progress-bar"></div>
+
+
+    <!-- 搜索遮罩框 -->
+<div id="searchModal" class="modal">
+    <div class="modal-content">
+        <div class="search-header">
+            <span class="title"><i class="fas fa-search"></i>&nbsp;&nbsp;搜索</span>
+            <input type="search" id="searchInput" name="s" placeholder="请输入搜索的关键字"
+                   class="search-input">
+        </div>
+        <div id="searchResult"></div>
+    </div>
+</div>
+
+<script type="text/javascript">
+$(function () {
+    var searchFunc = function (path, search_id, content_id) {
+        'use strict';
+        $.ajax({
+            url: path,
+            dataType: "xml",
+            success: function (xmlResponse) {
+                // get the contents from search data
+                var datas = $("entry", xmlResponse).map(function () {
+                    return {
+                        title: $("title", this).text(),
+                        content: $("content", this).text(),
+                        url: $("url", this).text()
+                    };
+                }).get();
+                var $input = document.getElementById(search_id);
+                var $resultContent = document.getElementById(content_id);
+                $input.addEventListener('input', function () {
+                    var str = '<ul class=\"search-result-list\">';
+                    var keywords = this.value.trim().toLowerCase().split(/[\s\-]+/);
+                    $resultContent.innerHTML = "";
+                    if (this.value.trim().length <= 0) {
+                        return;
+                    }
+                    // perform local searching
+                    datas.forEach(function (data) {
+                        var isMatch = true;
+                        var data_title = data.title.trim().toLowerCase();
+                        var data_content = data.content.trim().replace(/<[^>]+>/g, "").toLowerCase();
+                        var data_url = data.url;
+                        data_url = data_url.indexOf('/') === 0 ? data.url : '/' + data_url;
+                        var index_title = -1;
+                        var index_content = -1;
+                        var first_occur = -1;
+                        // only match artiles with not empty titles and contents
+                        if (data_title !== '' && data_content !== '') {
+                            keywords.forEach(function (keyword, i) {
+                                index_title = data_title.indexOf(keyword);
+                                index_content = data_content.indexOf(keyword);
+                                if (index_title < 0 && index_content < 0) {
+                                    isMatch = false;
+                                } else {
+                                    if (index_content < 0) {
+                                        index_content = 0;
+                                    }
+                                    if (i === 0) {
+                                        first_occur = index_content;
+                                    }
+                                }
+                            });
+                        }
+                        // show search results
+                        if (isMatch) {
+                            str += "<li><a href='" + data_url + "' class='search-result-title'>" + data_title + "</a>";
+                            var content = data.content.trim().replace(/<[^>]+>/g, "");
+                            if (first_occur >= 0) {
+                                // cut out 100 characters
+                                var start = first_occur - 20;
+                                var end = first_occur + 80;
+                                if (start < 0) {
+                                    start = 0;
+                                }
+                                if (start === 0) {
+                                    end = 100;
+                                }
+                                if (end > content.length) {
+                                    end = content.length;
+                                }
+                                var match_content = content.substr(start, end);
+                                // highlight all keywords
+                                keywords.forEach(function (keyword) {
+                                    var regS = new RegExp(keyword, "gi");
+                                    match_content = match_content.replace(regS, "<em class=\"search-keyword\">" + keyword + "</em>");
+                                });
+
+                                str += "<p class=\"search-result\">" + match_content + "...</p>"
+                            }
+                            str += "</li>";
+                        }
+                    });
+                    str += "</ul>";
+                    $resultContent.innerHTML = str;
+                });
+            }
+        });
+    };
+
+    searchFunc('/search.xml', 'searchInput', 'searchResult');
+});
+</script>
+
+    <!-- 回到顶部按钮 -->
+<div id="backTop" class="top-scroll">
+    <a class="btn-floating btn-large waves-effect waves-light" href="#!">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+</div>
+
+
+    <script src="/libs/materialize/materialize.min.js"></script>
+    <script src="/libs/masonry/masonry.pkgd.min.js"></script>
+    <script src="/libs/aos/aos.js"></script>
+    <script src="/libs/scrollprogress/scrollProgress.min.js"></script>
+    <script src="/libs/lightGallery/js/lightgallery-all.min.js"></script>
+    <script src="/js/matery.js"></script>
+
+    <!-- Baidu Analytics -->
+
+    <!-- Baidu Push -->
+
+<script>
+    (function () {
+        var bp = document.createElement('script');
+        var curProtocol = window.location.protocol.split(':')[0];
+        if (curProtocol === 'https') {
+            bp.src = 'https://zz.bdstatic.com/linksubmit/push.js';
+        } else {
+            bp.src = 'http://push.zhanzhang.baidu.com/push.js';
+        }
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(bp, s);
+    })();
+</script>
+
+    
+    <script src="/libs/others/clicklove.js" async="async"></script>
+    
+    
+    <script async src="/libs/others/busuanzi.pure.mini.js"></script>
+    
+
+    
+
+    
+
+    <!--腾讯兔小巢-->
+    
+    
+
+    
+
+    
+
+    
+    <script src="/libs/instantpage/instantpage.js" type="module"></script>
+    
+
+</body>
+
+</html>
